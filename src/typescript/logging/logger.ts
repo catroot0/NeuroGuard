@@ -33,15 +33,15 @@ class Logger {
     }
   }
 
-  async info(message: string) {
+  async info(message: any) {
     await this.log("info", message);
   }
 
-  async warn(message: string) {
+  async warn(message: any) {
     await this.log("warn", message);
   }
 
-  async error(message: string) {
+  async error(message: any) {
     await this.log("error", message);
   }
 }

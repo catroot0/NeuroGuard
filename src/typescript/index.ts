@@ -1,15 +1,23 @@
 import { config } from "dotenv";
 import { Client, GatewayIntentBits } from "discord.js";
 import logger from "./logging/logger.js";
+import verifySlashCommands from "./commands/test.js";
+import commandHandler from "./commandHandler.js";
 config();
 
 const token = process.env.TOKEN;
+const clientId = process.env.clientId;
 
 // if there is no bot token, then tell the user to check the .env file...
 // honestly i don't know how can someone be stupid enough to try using a bot without a token :|
 if (!token) {
-  await logger.info("Bot Token Is Missing!");
+  await logger.error("Bot Token Is Missing!");
   throw new Error("Bot Token Is Missing! Please Check The .env File.");
+} else if (!clientId) {
+  await logger.error("ClientId Is Missing!");
+  throw new Error("Client Id Is Missing! Please Check The .env File.");
+} else {
+  await logger.info("Both Bot Token And Client Id Are There!");
 }
 
 const client = new Client({
@@ -27,6 +35,7 @@ async function login(token: string) {
     await client.login(token);
     await logger.info("Login Successful!");
     console.log("Login Successful!");
+    await verifySlashCommands();
   } catch (error: any) {
     await logger.error("Login failed!");
     await logger.error(error.stack || error.message || error);
@@ -50,6 +59,12 @@ client.on("guildDelete", async (guild) => {
   await logger.warn(`Bot got kicked from ${guild.name}, (id: ${guild.id})`);
   console.log(guild);
   console.log(`Bot got kicked from ${guild.name}, (id: ${guild.id})`);
+});
+
+client.on("interactionCreate", async (interaction) => {
+  if (interaction.isChatInputCommand()) {
+    await commandHandler(interaction, interaction.commandName);
+  }
 });
 
 await login(token);
