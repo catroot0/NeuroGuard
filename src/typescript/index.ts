@@ -1,8 +1,8 @@
 import { config } from "dotenv";
 import { Client, GatewayIntentBits } from "discord.js";
 import logger from "./logging/logger.js";
-import verifySlashCommands from "./commands/test.js";
-import commandHandler from "./commandHandler.js";
+import verifySlashCommands from "./verify/slashCommands.js";
+import commandHandler from "./slashCommandHandler.js";
 config();
 
 const token = process.env.TOKEN;
@@ -35,7 +35,6 @@ async function login(token: string) {
     await client.login(token);
     await logger.info("Login Successful!");
     console.log("Login Successful!");
-    await verifySlashCommands();
   } catch (error: any) {
     await logger.error("Login failed!");
     await logger.error(error.stack || error.message || error);
@@ -53,12 +52,19 @@ async function login(token: string) {
 client.once("ready", async (event) => {
   await logger.info(`${event.user.tag} is Online!`);
   console.log(`${event.user.tag} is Online!`);
+  // await verifySlashCommands();
 });
 
 client.on("guildDelete", async (guild) => {
   await logger.warn(`Bot got kicked from ${guild.name}, (id: ${guild.id})`);
   console.log(guild);
   console.log(`Bot got kicked from ${guild.name}, (id: ${guild.id})`);
+});
+
+client.on("error", async (error) => {
+  await logger.error("Unexpected Error Happened!");
+  await logger.error(error);
+  console.log(`Unexpected Error Happened! | ${error.name}: ${error.message}`);
 });
 
 client.on("interactionCreate", async (interaction) => {

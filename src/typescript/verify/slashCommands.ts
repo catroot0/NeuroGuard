@@ -5,6 +5,7 @@ config();
 
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
 
+// bruh wtf is RESTPostAPIChatInputApplicationCommandsJSONBody :|
 async function verifySlashCommands(commands: RESTPostAPIChatInputApplicationCommandsJSONBody[]) {
   try {
     console.log("---------------------------------");
