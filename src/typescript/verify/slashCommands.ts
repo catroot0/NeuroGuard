@@ -1,6 +1,8 @@
 import { Routes, REST, RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
 import { config } from "dotenv";
 import logger from "../logging/logger.js";
+import normalizeSlashCommands from "../commands/normalizeSlashCommands.js";
+import isEqual from "lodash.isequal";
 config();
 
 const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
@@ -9,16 +11,31 @@ const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
 async function verifySlashCommands(commands: RESTPostAPIChatInputApplicationCommandsJSONBody[]) {
   try {
     console.log("---------------------------------");
-    await logger.info("Registering Slash Commands...");
-    console.log("Registering Slash Commands...");
+    console.log("Checking If Slash Commands Are Up To Date...");
+    await logger.info("Checking If Slash Commands Are Up To Date...");
 
-    // prettier-ignore
-    await rest.put(
+    // the code talks for itself :3
+    const existingCommands = (await rest.get(Routes.applicationCommands(process.env.clientId!))) as RESTPostAPIChatInputApplicationCommandsJSONBody[];
+    const normalizedCommands = normalizeSlashCommands(commands);
+    const normalizedExistingCommands = normalizeSlashCommands(existingCommands);
+
+    if (isEqual(normalizedCommands, normalizedExistingCommands)) {
+      await logger.info("Slash Commands Are Up To Date!");
+      console.log("Slash Commands Are Up To Date!");
+    } else {
+      await logger.info("Slash Commands Are NOT Up To Date!");
+      console.log("Slash Commands Are NOT Up To Date!");
+      await logger.info("Registering Slash Commands...");
+      console.log("Registering Slash Commands...");
+
+      // prettier-ignore
+      await rest.put(
       Routes.applicationCommands(process.env.ClientId!),
       { body: commands }
     );
-    await logger.info("Slash Commands Registered Successfully!");
-    console.log("Slash Commands Registered Successfully!");
+      await logger.info("Slash Commands Registered Successfully!");
+      console.log("Slash Commands Registered Successfully!");
+    }
   } catch (error) {
     await logger.error("Registering Slash Commands Failed!");
     console.error("Registering Slash Commands Failed!");

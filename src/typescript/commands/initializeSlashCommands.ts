@@ -9,7 +9,7 @@ function initializeSlashCommands(): RESTPostAPIChatInputApplicationCommandsJSONB
       .addStringOption((option) => {
         // prettier-ignore
         return option.setName("input")
-      .setDescription("The Input To Echo Bach")
+      .setDescription("The Input To Echo Back")
       .setRequired(true)
       }),
   ];

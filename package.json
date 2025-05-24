@@ -16,10 +16,12 @@
   "description": "AntiGooner is a powerful moderation bot built to help server owners protect their communities from harmful and explicit people. It automatically scans for users affiliated with NSFW or pornographic servers and takes action—such as flagging or banning—according to customizable safety policies. Designed with child safety in mind",
   "dependencies": {
     "discord.js": "^14.19.3",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.5.0",
+    "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.1",
+    "@types/lodash.isequal": "^4.5.8",
     "@types/node": "^22.15.18",
     "typescript": "^5.8.3"
   }
