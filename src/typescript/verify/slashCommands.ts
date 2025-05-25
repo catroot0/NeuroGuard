@@ -1,11 +1,10 @@
+import { token, clientId } from "../config.js";
 import { Routes, REST, RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
-import { config } from "dotenv";
 import logger from "../logging/logger.js";
 import normalizeSlashCommands from "../commands/normalizeSlashCommands.js";
 import isEqual from "lodash.isequal";
-config();
 
-const rest = new REST({ version: "10" }).setToken(process.env.TOKEN!);
+const rest = new REST({ version: "10" }).setToken(token!);
 
 // bruh wtf is RESTPostAPIChatInputApplicationCommandsJSONBody :|
 async function verifySlashCommands(commands: RESTPostAPIChatInputApplicationCommandsJSONBody[]) {
@@ -15,7 +14,7 @@ async function verifySlashCommands(commands: RESTPostAPIChatInputApplicationComm
     await logger.info("Checking If Slash Commands Are Up To Date...");
 
     // the code talks for itself :3
-    const existingCommands = (await rest.get(Routes.applicationCommands(process.env.clientId!))) as RESTPostAPIChatInputApplicationCommandsJSONBody[];
+    const existingCommands = (await rest.get(Routes.applicationCommands(clientId!))) as RESTPostAPIChatInputApplicationCommandsJSONBody[];
     const normalizedCommands = normalizeSlashCommands(commands);
     const normalizedExistingCommands = normalizeSlashCommands(existingCommands);
 

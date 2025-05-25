@@ -1,13 +1,9 @@
-import { config } from "dotenv";
+import { token, clientId } from "./config.js";
 import { Client, GatewayIntentBits } from "discord.js";
 import logger from "./logging/logger.js";
 import verifySlashCommands from "./verify/slashCommands.js";
 import commandHandler from "./slashCommandHandler.js";
 import initializeSlashCommands from "./commands/initializeSlashCommands.js";
-config();
-
-const token = process.env.TOKEN;
-const clientId = process.env.clientId;
 
 // if there is no bot token, then tell the user to check the .env file...
 // honestly i don't know how can someone be stupid enough to try using a bot without a token :|
