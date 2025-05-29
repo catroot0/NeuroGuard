@@ -1,7 +1,7 @@
 import { token, clientId } from "../config.js";
 import { Routes, REST, RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
 import logger from "../logging/logger.js";
-import normalizeSlashCommands from "../commands/normalizeSlashCommands.js";
+import normalizeSlashCommands from "../normalize/slashCommands.js";
 import isEqual from "lodash.isequal";
 
 const rest = new REST({ version: "10" }).setToken(token!);
