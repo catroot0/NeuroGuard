@@ -1,11 +1,14 @@
-import { clientId, redirectUrl, clientSecret } from "../config.js";
+import { clientId, redirectUrl, clientSecret, token } from "../config.js";
 import express, { Request, Response } from "express";
 import createOAuthURL from "./createOAuthURL.js";
 import fetchAccessToken from "./fetchAccessToken.js";
 import fetchUserGuilds from "./fetchUserGuilds.js";
-import normalizeUserGuilds from "./normalizeUserGuilds.js";
+import normalizeUserGuilds from "../normalize/userGuild.js";
 import fetchUserIdentity from "./fetchUserIdentity.js";
 import logger from "../logging/logger.js";
+import checkForNsfwGuild from "../search/nsfwGuild.js";
+import client from "../client/client.js";
+import startBot from "../client/login.js";
 
 const app = express();
 const PORT = 3000;
@@ -28,6 +31,7 @@ async function redirectToAuth(_: Request, res: Response) {
 }
 
 async function handleCallback(req: Request, res: Response) {
+  console.log("-------------------------------------------");
   const code = req.query.code as string;
   await logger.info("OAuth Callback Received.");
   console.log("OAuth Callback Received.");
@@ -56,6 +60,12 @@ async function handleCallback(req: Request, res: Response) {
     console.log("User Identity Fetched.");
     await logger.info("User Identity Fetched.");
 
+    const normalizedGuilds = normalizeUserGuilds(guilds);
+
+    checkForNsfwGuild(normalizedGuilds);
+
+    (await client.users.fetch(identity.id)).send("test");
+
     res.send(`
       <html>
        <title>Im Useless :)</title>
@@ -73,6 +83,8 @@ async function handleCallback(req: Request, res: Response) {
 app.get("/", redirectToAuth);
 app.get("/callback", handleCallback);
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running at http://localhost:${PORT}`);
+  await logger.info(`Server is running at http://localhost:${PORT}`);
+  await startBot(token!);
 });
