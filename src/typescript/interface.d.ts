@@ -8,4 +8,17 @@ interface DiscordGuild {
   features: string[];
 }
 
-export { DiscordGuild };
+interface NormalizedGuild {
+  name: string;
+  id: string;
+  icon: string | null;
+  banner: string | null;
+  isOwner: boolean;
+}
+
+interface CleanedUser {
+  username: string;
+  id: id;
+}
+
+export { DiscordGuild, NormalizedGuild, CleanedUser };
