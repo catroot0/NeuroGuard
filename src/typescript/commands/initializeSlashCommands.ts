@@ -2,16 +2,19 @@ import { RESTPostAPIChatInputApplicationCommandsJSONBody, SlashCommandBuilder } 
 
 //long story short, it returns a array of the commands... don't blame me for this LONGASS type name >:(
 function initializeSlashCommands(): RESTPostAPIChatInputApplicationCommandsJSONBody[] {
+  // prettier-ignore
   const rawCommands = [
     new SlashCommandBuilder()
       .setName("echo")
       .setDescription("Replies With Your Input!")
       .addStringOption((option) => {
-        // prettier-ignore
         return option.setName("input")
       .setDescription("The Input To Echo Back")
       .setRequired(true)
       }),
+    new SlashCommandBuilder()
+      .setName("verify")
+      .setDescription("test")
   ];
 
   const commands = rawCommands.map((command) => command.toJSON());
