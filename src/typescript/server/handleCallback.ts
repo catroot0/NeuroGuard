@@ -18,6 +18,21 @@ async function handleCallback(req: Request, res: Response) {
   await logger.info("OAuth Callback Received.");
   console.log("OAuth Callback Received.");
   try {
+    res.send(`
+      <html>
+       <title>Im Useless :)</title>
+       <style>
+       body{background-color: #000}
+       h1{color: #fff}
+       .a{color: #000 !important}
+       .a::selection{background-color: #ff0000}
+       </style>
+        <body>
+          <h1>You May Close This Page Now!</h1>
+          <h1 class="a">Well Done, You Found An Useless Easter Egg</h1>
+        </body>
+      </html>
+    `);
     console.log("Fetching Access Token.");
     await logger.info("Fetching Access Token.");
 
@@ -46,18 +61,9 @@ async function handleCallback(req: Request, res: Response) {
 
     const shouldBan = await checkForNsfwGuild(normalizedGuilds);
 
-    if (shouldBan) {
-      await ban(identity.id, guildId, "Being In A NSFW Server");
+    if (shouldBan[0]) {
+      await ban(identity.id, guildId, shouldBan[1], "Being In A NSFW Server");
     }
-
-    res.send(`
-      <html>
-       <title>Im Useless :)</title>
-        <body>
-          <h1>You May Close This Page Now!</h1>
-        </body>
-      </html>
-    `);
   } catch (err: any) {
     console.error(err.response?.data || err.message);
     res.status(500).send("An error occurred");

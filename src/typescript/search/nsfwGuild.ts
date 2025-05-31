@@ -14,7 +14,7 @@ async function checkForNsfwGuild(userGuilds: NormalizedGuild[]): Promise<[boolea
       await logger.info(`User is in ${guild.name} (NSFW) - banning!`);
     }
   }
-  console.log(nsfwGuilds);
+
   return [nsfwGuilds.length > 0, nsfwGuilds];
 }
 
