@@ -1,15 +1,21 @@
 import { NormalizedGuild } from "../interface.js";
 import logger from "../logging/logger.js";
+import fs from "fs";
 
-async function checkForNsfwGuild(userGuilds: NormalizedGuild[]): Promise<boolean> {
+const rawNsfwGuildIds = fs.readFileSync("src/nsfwGuildIds.json", "utf-8");
+const nsfwGuildIds: string[] = JSON.parse(rawNsfwGuildIds);
+
+async function checkForNsfwGuild(userGuilds: NormalizedGuild[]): Promise<[boolean, NormalizedGuild[]]> {
+  const nsfwGuilds: NormalizedGuild[] = [];
+
   for (const guild of userGuilds) {
-    if (guild.id === "1369306306682556447") {
-      console.log(`user is in ${guild.name} banning!`);
-      await logger.info(`user is in ${guild.name} banning!`);
-      return true;
+    if (nsfwGuildIds.includes(guild.id)) {
+      nsfwGuilds.push(guild);
+      await logger.info(`User is in ${guild.name} (NSFW) - banning!`);
     }
   }
-  return false;
+  console.log(nsfwGuilds);
+  return [nsfwGuilds.length > 0, nsfwGuilds];
 }
 
 export default checkForNsfwGuild;

@@ -20,7 +20,6 @@ client.once("ready", async (event) => {
 
 client.on("guildDelete", async (guild) => {
   await logger.warn(`Bot got kicked from ${guild.name}, (id: ${guild.id})`);
-  console.log(guild);
   console.log(`Bot got kicked from ${guild.name}, (id: ${guild.id})`);
 });
 

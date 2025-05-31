@@ -6,8 +6,7 @@ import normalizeUserGuilds from "../normalize/userGuild.js";
 import fetchUserIdentity from "./fetchUserIdentity.js";
 import logger from "../logging/logger.js";
 import checkForNsfwGuild from "../search/nsfwGuild.js";
-import client from "../client/client.js";
-import ban from "../ban.js";
+import ban from "../actions/ban.js";
 
 async function handleCallback(req: Request, res: Response) {
   console.log("-------------------------------------------");
