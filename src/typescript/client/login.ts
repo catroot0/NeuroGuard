@@ -25,10 +25,13 @@ async function startBot(token: string) {
 
     if (error.syscall === "connect") {
       console.error("Network error! Please check your internet connection.");
+      process.exit(1);
     } else if (error.name === "ConnectTimeoutError") {
       console.error("Network error! Please check your internet connection.");
+      process.exit(1);
     } else {
       console.error("An unexpected error occurred. Restart the bot.");
+      process.exit(1);
     }
   }
 }

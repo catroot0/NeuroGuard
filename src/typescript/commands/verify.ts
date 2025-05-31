@@ -2,10 +2,9 @@ import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
 import { clientId, redirectUrl } from "../config.js";
 import createOAuthURL from "../server/createOAuthURL.js";
 
-const AuthURL = createOAuthURL(clientId!, redirectUrl!);
-
 // prettier-ignore
 async function verify(interaction: ChatInputCommandInteraction) {
+  const AuthURL = createOAuthURL(clientId!, redirectUrl!, interaction.guild!.id);
   await interaction.deferReply();
 
   const embed = new EmbedBuilder()
