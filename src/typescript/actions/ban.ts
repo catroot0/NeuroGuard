@@ -29,7 +29,7 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
     }
 
     await delay(2000);
-    // await guild.bans.create(userId, { reason });
+    await guild.bans.create(userId, { reason });
     await logger.info(`User ${user.tag} (${user.id}) was banned from ${guild.name}`);
 
     await delay(5000);
