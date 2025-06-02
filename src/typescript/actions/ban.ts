@@ -18,7 +18,7 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
       .setTitle(`You Has Been Banned From ${guild.name}`)
       .setDescription(
         `Unfortunately, You Has Been Banned From ${guild.name}.\n` +
-        `You Are In \n ${nsfwGuilds.map((guild) => guild.name).join("\n ")}. \n ***Which Is Not Allowed.*** We Would Really Appreciate If You Leave Those Servers And Appeal For Unban`
+        `You Are In \n ${nsfwGuilds.map((guild) => guild.name).join("\n ")} \n ***Which Is Not Allowed.*** We Would Really Appreciate If You Leave Those Servers And Appeal For Unban`
       )
       .setColor("Red");
 
