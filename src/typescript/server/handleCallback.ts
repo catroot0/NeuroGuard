@@ -26,10 +26,18 @@ async function handleCallback(req: Request, res: Response) {
        h1{color: #fff}
        .a{color: #000 !important}
        .a::selection{background-color: #ff0000}
+       .bee,.bee > a{
+        color: #000 !important;
+        opacity: 0.3;
+       }
+       .bee::selection, .bee > a{
+        opacity: 1 !important;
+        color: #aff999;
+       }
        </style>
         <body>
           <h1>You May Close This Page Now!</h1>
-          <h1 class="a">Well Done, You Found An Useless Easter Egg</h1>
+          <h3 class="bee"> <a href="https://discord.com/users/1346355816281800704">Bee</a> Is A Good Girl</h3>
         </body>
       </html>
     `);
