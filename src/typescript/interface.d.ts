@@ -16,9 +16,4 @@ interface NormalizedGuild {
   isOwner: boolean;
 }
 
-interface CleanedUser {
-  username: string;
-  id: id;
-}
-
-export { DiscordGuild, NormalizedGuild, CleanedUser };
+export { DiscordGuild, NormalizedGuild };
