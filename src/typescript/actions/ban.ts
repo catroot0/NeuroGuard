@@ -15,12 +15,14 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
 
     // prettier-ignore
     const embed = new EmbedBuilder()
-      .setTitle(`You Has Been Banned From ${guild.name}`)
-      .setDescription(
-        `Unfortunately, You Has Been Banned From ${guild.name}.\n` +
-        `You Are In \n ${nsfwGuilds.map((guild) => guild.name).join("\n ")} \n ***Which Is Not Allowed.*** We Would Really Appreciate If You Leave Those Servers And Appeal For Unban`
-      )
-      .setColor("Red");
+    .setTitle(`You Have Been Banned From ${guild.name}`)
+    .setDescription(
+      `You have been banned from **${guild.name}** due to your membership in the following servers:\n\n` +
+      `${nsfwGuilds.map((g) => `• ${g.name}`).join("\n")}\n\n` +
+      `Membership in these servers is not allowed. We kindly ask that you leave them.\n` +
+      `Once you've done so, you may appeal for an unban.`
+    )
+    .setColor("Red");
 
     try {
       await sendMessage(userId, embed);
