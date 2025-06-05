@@ -24,8 +24,6 @@ async function handleCallback(req: Request, res: Response) {
        <style>
        body{background-color: #000}
        h1{color: #fff}
-       .a{color: #000 !important}
-       .a::selection{background-color: #ff0000}
        .bee,.bee > a{
         color: #000 !important;
         opacity: 0.3;
