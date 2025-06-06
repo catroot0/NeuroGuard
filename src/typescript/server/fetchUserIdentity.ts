@@ -1,23 +1,24 @@
 import axios from "axios";
 import logger from "../logging/logger.js";
 
+// Fetches basic user identity info from Discord.
 async function fetchUserIdentity(accessToken: string): Promise<any> {
   try {
-    console.log("Fetching User Identity.");
-    await logger.info("Fetching User Identity.");
+    console.log("Fetching user identity...");
+    await logger.info("Fetching user identity...");
 
     const response = await axios.get("https://discord.com/api/users/@me", {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    console.log("User Identity Fetched.");
-    await logger.info("User Identity Fetched.");
+    console.log("User identity fetched.");
+    await logger.info("User identity fetched.");
 
     return response.data;
   } catch (error) {
-    await logger.error("Fetching User Identity Failed");
+    console.error("Failed to fetch user identity.");
+    await logger.error("Failed to fetch user identity.");
     await logger.error(error);
-    console.log("Fetching User Identity Failed");
   }
 }
 

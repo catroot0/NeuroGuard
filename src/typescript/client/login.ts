@@ -3,38 +3,44 @@ import isNetworkError from "../helpers/isNetworkError.js";
 import logger from "../logging/logger.js";
 import client from "./client.js";
 
+// Configuration validation
 if (!token) {
-  await logger.error("Bot Token Is Missing!");
-  throw new Error("Bot Token Is Missing! Please Check The .env File.");
-} else if (!clientId) {
-  await logger.error("ClientId Is Missing!");
-  throw new Error("Client Id Is Missing! Please Check The .env File.");
-} else if (!clientSecret) {
-  await logger.error("Client Secret Is Missing!");
-  throw new Error("Client Secret Is Missing! Please Check The .env File.");
-} else {
-  await logger.info("Both Bot Token And Client Id Are There!");
+  await logger.error("Bot token is missing. Please check your .env file.");
+  throw new Error("Bot token is missing. Check your .env file.");
 }
+
+if (!clientId) {
+  await logger.error("Client ID is missing. Please check your .env file.");
+  throw new Error("Client ID is missing. Check your .env file.");
+}
+
+if (!clientSecret) {
+  await logger.error("Client secret is missing. Please check your .env file.");
+  throw new Error("Client secret is missing. Check your .env file.");
+}
+
+await logger.info("Environment variables loaded successfully.");
 
 async function startBot(token: string) {
   try {
-    console.log("Logging In To The Bot...");
-    await logger.info("Logging In To The Bot...");
+    console.log("Logging in to the bot...");
+    await logger.info("Attempting to log in to the bot...");
+
     await client.login(token);
-    await logger.info("Login Successful!");
-    console.log("Login Successful!");
+
+    console.log("Bot login successful.");
+    await logger.info("Bot login successful.");
   } catch (error: any) {
     if (isNetworkError(error)) {
-      await logger.error("Login Failed Due To Network Error");
-      await logger.error(error);
-      console.error("Network-related error detected. Check your internet or Discord API status.");
-      process.exit(1);
+      console.error("Login failed due to a network error. Check your internet connection or Discord API status.");
+      await logger.error("Login failed: network error.");
     } else {
-      await logger.error("Login Failed Due To Unexpected Error");
-      console.error("Login Failed Due To Unexpected Error! Please Check The Last .log File");
-      await logger.error(error);
-      process.exit(1);
+      console.error("Login failed due to an unexpected error. Please check the latest log file.");
+      await logger.error("Login failed: unexpected error.");
     }
+
+    await logger.error(error);
+    process.exit(1);
   }
 }
 

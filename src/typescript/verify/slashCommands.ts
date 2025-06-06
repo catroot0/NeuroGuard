@@ -6,37 +6,37 @@ import isEqual from "lodash.isequal";
 
 const rest = new REST({ version: "10" }).setToken(token!);
 
-// bruh wtf is RESTPostAPIChatInputApplicationCommandsJSONBody :|
 async function verifySlashCommands(commands: RESTPostAPIChatInputApplicationCommandsJSONBody[]) {
   try {
     console.log("---------------------------------");
-    console.log("Checking If Slash Commands Are Up To Date...");
-    await logger.info("Checking If Slash Commands Are Up To Date...");
+    console.log("Checking if slash commands are up to date...");
+    await logger.info("Checking if slash commands are up to date...");
 
-    // the code talks for itself :3
-    const existingCommands = (await rest.get(Routes.applicationCommands(clientId!))) as RESTPostAPIChatInputApplicationCommandsJSONBody[];
-    const normalizedCommands = normalizeSlashCommands(commands);
-    const normalizedExistingCommands = normalizeSlashCommands(existingCommands);
+    const existingCommands = await rest.get(
+      Routes.applicationCommands(clientId!)
+    ) as RESTPostAPIChatInputApplicationCommandsJSONBody[];
 
-    if (isEqual(normalizedCommands, normalizedExistingCommands)) {
-      await logger.info("Slash Commands Are Up To Date!");
-      console.log("Slash Commands Are Up To Date!");
+    const normalizedNew = normalizeSlashCommands(commands);
+    const normalizedExisting = normalizeSlashCommands(existingCommands);
+
+    if (isEqual(normalizedNew, normalizedExisting)) {
+      console.log("Slash commands are up to date.");
+      await logger.info("Slash commands are up to date.");
     } else {
-      await logger.info("Slash Commands Are NOT Up To Date!");
-      console.log("Slash Commands Are NOT Up To Date!");
-      await logger.info("Registering Slash Commands...");
-      console.log("Registering Slash Commands...");
+      console.log("Slash commands are not up to date. Registering...");
+      await logger.info("Slash commands are not up to date. Registering...");
 
       await rest.put(
-      Routes.applicationCommands(process.env.ClientId!),
-      { body: commands }
-    );
-      await logger.info("Slash Commands Registered Successfully!");
-      console.log("Slash Commands Registered Successfully!");
+        Routes.applicationCommands(clientId!),
+        { body: commands }
+      );
+
+      console.log("Slash commands registered successfully!");
+      await logger.info("Slash commands registered successfully.");
     }
   } catch (error) {
-    await logger.error("Registering Slash Commands Failed!");
-    console.error("Registering Slash Commands Failed!");
+    console.error("Registering slash commands failed!");
+    await logger.error("Registering slash commands failed.");
     await logger.error(error);
     process.exit(1);
   }

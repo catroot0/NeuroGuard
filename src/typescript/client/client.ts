@@ -29,7 +29,7 @@ client.on("error", async (error: any) => {
     await logger.error("Unknown interaction error... Possibly due to network lag or slow response");
     return;
   }
-  console.log(`Unexpected Error Happened! | ${error.name}: ${error.message}`);
+  console.log(`Unexpected error happened! | ${error.name}: ${error.message}`);
 });
 
 client.on("interactionCreate", async (interaction) => {

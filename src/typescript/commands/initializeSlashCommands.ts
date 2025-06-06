@@ -1,23 +1,24 @@
 import { RESTPostAPIChatInputApplicationCommandsJSONBody, SlashCommandBuilder } from "discord.js";
 
-//long story short, it returns a array of the commands... don't blame me for this LONGASS type name >:(
+// Returns an array of slash commands to register with Discord
 function initializeSlashCommands(): RESTPostAPIChatInputApplicationCommandsJSONBody[] {
   const rawCommands = [
     new SlashCommandBuilder()
       .setName("echo")
-      .setDescription("Replies With Your Input!")
-      .addStringOption((option) => {
-        return option.setName("input")
-      .setDescription("The Input To Echo Back")
-      .setRequired(true)
-      }),
+      .setDescription("Replies with your input.")
+      .addStringOption((option) =>
+        option
+          .setName("input")
+          .setDescription("The input to echo back.")
+          .setRequired(true)
+      ),
+
     new SlashCommandBuilder()
       .setName("verify")
-      .setDescription("test")
+      .setDescription("Start the verification process to access the server."),
   ];
 
-  const commands = rawCommands.map((command) => command.toJSON());
-  return commands;
+  return rawCommands.map((command) => command.toJSON());
 }
 
 export default initializeSlashCommands;

@@ -1,6 +1,6 @@
 import { RESTPostAPIChatInputApplicationCommandsJSONBody } from "discord.js";
 
-// normalizing the slash commands good because discord is a bitch :)))))))))
+// Normalizing slash commands because Discord loves being a bitch :)
 function normalizeSlashCommands(cmds: any[]): RESTPostAPIChatInputApplicationCommandsJSONBody[] {
   return cmds.map((cmd) => ({
     name: cmd.name,

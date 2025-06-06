@@ -10,48 +10,59 @@ import ban from "../actions/ban.js";
 
 async function handleCallback(req: Request, res: Response) {
   console.log("-------------------------------------------");
+  await logger.info("OAuth callback received.");
+
   const code = req.query.code as string;
   const state = req.query.state as string;
 
-  const guildId = JSON.parse(state).guildId;
+  if (!code || !state) {
+    res.status(400).send("Missing 'code' or 'state' in query.");
+    return;
+  }
 
-  await logger.info("OAuth Callback Received.");
-  console.log("OAuth Callback Received.");
+  let guildId: string;
+
   try {
-    res.send(`
-      <html>
-       <title>Im Useless :)</title>
-       <style>
-       body{background-color: #000}
-       h1{color: #fff}
-       .bee,.bee > a{
-        color: #000 !important;
-        opacity: 0.3;
-       }
-       .bee::selection, .bee > a{
-        opacity: 1 !important;
-        color: #aff999;
-       }
-       </style>
-        <body>
-          <h1>You May Close This Page Now!</h1>
-          <h3 class="bee"> <a href="https://discord.com/users/1346355816281800704">Bee</a> Is A Good Girl</h3>
-        </body>
-      </html>
-    `);
+    guildId = JSON.parse(state).guildId;
+  } catch {
+    res.status(400).send("Invalid state parameter.");
+    return;
+  }
 
+  // Send immediate response
+  res.send(`
+    <html>
+      <head>
+        <title>You're Good To Go</title>
+        <style>
+          body { background-color: #000; color: #fff; font-family: sans-serif; text-align: center; padding-top: 50px; }
+          a { color: #aaa; text-decoration: none; }
+          a:hover { color: #aff999; }
+        </style>
+      </head>
+      <body>
+        <h1>You may now close this page.</h1>
+        <p><a href="https://discord.com/users/1346355816281800704" target="_blank">Bee is a good girl 🐝</a></p>
+      </body>
+    </html>
+  `);
+
+  try {
     const accessToken = await fetchAccessToken(clientId!, clientSecret!, code, redirectUrl!);
-    const guilds = await fetchUserGuilds(accessToken);
-    const identity = await fetchUserIdentity(accessToken);
-    const normalizedGuilds = normalizeUserGuilds(guilds);
-    const shouldBan = await checkForNsfwGuild(normalizedGuilds);
+    const rawGuilds = await fetchUserGuilds(accessToken);
+    const user = await fetchUserIdentity(accessToken);
+    const normalizedGuilds = normalizeUserGuilds(rawGuilds);
 
-    if (shouldBan[0]) {
-      await ban(identity.id, guildId, shouldBan[1], "Being In A NSFW Server");
+    const [hasNsfwGuild, nsfwGuilds] = await checkForNsfwGuild(normalizedGuilds);
+
+    if (hasNsfwGuild) {
+      await ban(user.id, guildId, nsfwGuilds, "Being in an NSFW (porn/condo) server");
+      await logger.warn(`User ${user.username} (${user.id}) was banned for NSFW guilds.`);
     }
   } catch (err: any) {
-    console.error(err.response?.data || err.message);
-    res.status(500).send("An error occurred");
+    console.error("Error during callback processing:", err.response?.data || err.message);
+    await logger.error("Callback processing failed.");
+    await logger.error(err);
   }
 }
 
