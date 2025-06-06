@@ -27,7 +27,6 @@ async function verifySlashCommands(commands: RESTPostAPIChatInputApplicationComm
       await logger.info("Registering Slash Commands...");
       console.log("Registering Slash Commands...");
 
-      // prettier-ignore
       await rest.put(
       Routes.applicationCommands(process.env.ClientId!),
       { body: commands }

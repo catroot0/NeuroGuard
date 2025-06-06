@@ -2,7 +2,6 @@ import { RESTPostAPIChatInputApplicationCommandsJSONBody, SlashCommandBuilder } 
 
 //long story short, it returns a array of the commands... don't blame me for this LONGASS type name >:(
 function initializeSlashCommands(): RESTPostAPIChatInputApplicationCommandsJSONBody[] {
-  // prettier-ignore
   const rawCommands = [
     new SlashCommandBuilder()
       .setName("echo")
