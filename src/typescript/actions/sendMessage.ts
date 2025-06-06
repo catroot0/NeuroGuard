@@ -1,32 +1,21 @@
-import { EmbedBuilder, APIEmbed } from "discord.js";
+import { EmbedBuilder, APIEmbed, ActionRowBuilder, AnyComponentBuilder } from "discord.js";
 import client from "../client/client.js";
 import logger from "../logging/logger.js";
 
-/*
- * bro do i even need to explain anything?, what can't you understand from this code?
- * ITS OBVIOUS BRO JUST READ THE FUNCTION NAME AND YOU'LL UNDERSTAND WHAT IT DOES
- */
-async function sendMessage(userId: string, message: string | EmbedBuilder | APIEmbed) {
+async function sendMessage(userId: string, message: string | EmbedBuilder | APIEmbed, componentRow?: ActionRowBuilder<AnyComponentBuilder>) {
   try {
     const user = await client.users.fetch(userId);
+    const payload: any = typeof message === "string" ? { content: message } : { embeds: [message instanceof EmbedBuilder ? message.toJSON() : message] };
 
-    if (typeof message === "string") {
-      await logger.info(`Sending Message To User ${user.username} (ID: ${user.id})`);
-      console.log(`Sending Message To User ${user.username} (ID: ${user.id})`);
+    if (componentRow) payload.components = [componentRow];
 
-      await user.send(message);
+    await logger.info(`Sending DM to ${user.username} (ID: ${user.id})`);
+    console.log(`Sending DM to ${user.username} (ID: ${user.id})`);
 
-      await logger.info(`Message Sended To User ${user.username} (ID: ${user.id}) Successfully`);
-      console.log(`Message Sended To User ${user.username} (ID: ${user.id}) Successfully`);
-    } else {
-      await logger.info(`Sending Message(Embed) To User ${user.username} (ID: ${user.id})`);
-      console.log(`Sending Message(Embed) To User ${user.username} (ID: ${user.id})`);
+    await user.send(payload);
 
-      await user.send({ embeds: [message] });
-
-      await logger.info(`Message(Embed) Sended To User ${user.username} (ID: ${user.id}) Successfully`);
-      console.log(`Message(Embed) Sended To User ${user.username} (ID: ${user.id}) Successfully`);
-    }
+    await logger.info(`DM sent to ${user.username} (ID: ${user.id}) successfully`);
+    console.log(`DM sent to ${user.username} (ID: ${user.id}) successfully`);
   } catch (error) {
     await logger.warn(`Could not send DM to user ${userId}: ${error}`);
     console.log(`Could not send DM to user ${userId}`);
