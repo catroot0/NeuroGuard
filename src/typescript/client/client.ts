@@ -23,9 +23,12 @@ client.on("guildDelete", async (guild) => {
   console.log(`Bot got kicked from ${guild.name}, (id: ${guild.id})`);
 });
 
-client.on("error", async (error) => {
-  await logger.error("Unexpected Error Happened!");
-  await logger.error(error);
+client.on("error", async (error: any) => {
+  if (error.code === 10062) {
+    console.warn("Unknown interaction error... Possibly due to network lag or slow response");
+    await logger.error("Unknown interaction error... Possibly due to network lag or slow response");
+    return;
+  }
   console.log(`Unexpected Error Happened! | ${error.name}: ${error.message}`);
 });
 

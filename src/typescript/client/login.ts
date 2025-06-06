@@ -1,4 +1,5 @@
-import { token, clientId } from "../config.js";
+import { token, clientId, clientSecret } from "../config.js";
+import isNetworkError from "../helpers/isNetworkError.js";
 import logger from "../logging/logger.js";
 import client from "./client.js";
 
@@ -8,6 +9,9 @@ if (!token) {
 } else if (!clientId) {
   await logger.error("ClientId Is Missing!");
   throw new Error("Client Id Is Missing! Please Check The .env File.");
+} else if (!clientSecret) {
+  await logger.error("Client Secret Is Missing!");
+  throw new Error("Client Secret Is Missing! Please Check The .env File.");
 } else {
   await logger.info("Both Bot Token And Client Id Are There!");
 }
@@ -20,17 +24,15 @@ async function startBot(token: string) {
     await logger.info("Login Successful!");
     console.log("Login Successful!");
   } catch (error: any) {
-    await logger.error("Login failed!");
-    await logger.error(error.stack || error.message || error);
-
-    if (error.syscall === "connect") {
-      console.error("Network error! Please check your internet connection.");
-      process.exit(1);
-    } else if (error.name === "ConnectTimeoutError") {
-      console.error("Network error! Please check your internet connection.");
+    if (isNetworkError(error)) {
+      await logger.error("Login Failed Due To Network Error");
+      await logger.error(error);
+      console.error("Network-related error detected. Check your internet or Discord API status.");
       process.exit(1);
     } else {
-      console.error("An unexpected error occurred. Restart the bot.");
+      await logger.error("Login Failed Due To Unexpected Error");
+      console.error("Login Failed Due To Unexpected Error! Please Check The Last .log File");
+      await logger.error(error);
       process.exit(1);
     }
   }
