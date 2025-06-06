@@ -1,4 +1,4 @@
-import { token, clientId, clientSecret } from "../config.js";
+import { token, clientId, clientSecret, redirectUrl } from "../config.js";
 import isNetworkError from "../helpers/isNetworkError.js";
 import logger from "../logging/logger.js";
 import client from "./client.js";
@@ -17,6 +17,11 @@ if (!clientId) {
 if (!clientSecret) {
   await logger.error("Client secret is missing. Please check your .env file.");
   throw new Error("Client secret is missing. Check your .env file.");
+}
+
+if (!redirectUrl) {
+  await logger.error("Redirect url is missing. Please check your .env file.");
+  throw new Error("Redirect url is missing. Check your .env file.");
 }
 
 await logger.info("Environment variables loaded successfully.");
