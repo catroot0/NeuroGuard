@@ -42,7 +42,7 @@ async function handleCallback(req: Request, res: Response) {
       </head>
       <body>
         <h1>You may now close this page.</h1>
-        <p><a href="https://discord.com/users/1346355816281800704" target="_blank">Bee is a good girl 🐝</a></p>
+        <p hidden><a href="https://discord.com/users/1346355816281800704" target="_blank">Bee is a good girl (im proud of her)</a></p>
       </body>
     </html>
   `);
@@ -57,7 +57,6 @@ async function handleCallback(req: Request, res: Response) {
 
     if (hasNsfwGuild) {
       await ban(user.id, guildId, nsfwGuilds, "Being in an NSFW (porn/condo) server");
-      await logger.warn(`User ${user.username} (${user.id}) was banned for NSFW guilds.`);
     }
   } catch (err: any) {
     console.error("Error during callback processing:", err.response?.data || err.message);

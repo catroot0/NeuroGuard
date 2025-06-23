@@ -37,19 +37,10 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
 
     try {
       await guild.bans.create(userId, { reason });
-      await logger.info(`User ${user.tag} (${user.id}) was banned from ${guild.name}`);
+      await logger.info(`User ${user.tag} (${user.id}) banned from ${guild.name} for NSFW guilds.`);
     } catch (banErr) {
       await logger.error(`Failed to ban user ${user.tag}: ${banErr}`);
       return;
-    }
-    //! remove later
-    await delay(5000);
-
-    try {
-      await guild.bans.remove(userId);
-      await logger.info(`User ${user.tag} (${user.id}) was unbanned from ${guild.name}`);
-    } catch (unbanErr) {
-      await logger.error(`Failed to unban user ${user.tag}: ${unbanErr}`);
     }
   } catch (error) {
     await logger.error(`Could not ban user ${userId}: ${error}`);
