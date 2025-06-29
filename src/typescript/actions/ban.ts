@@ -17,7 +17,10 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
 
     const embed = new EmbedBuilder()
       .setTitle(`You Have Been Banned From ${guild.name}`)
-      .setDescription(`You have been banned from **${guild.name}** due to your membership in the following servers:\n\n` + `${guildList}\n\n` + `Membership in these servers is not allowed. We kindly ask that you leave them.\n` + `Once you've done so, you may appeal for an unban.`)
+      .setDescription(`You have been banned from **${guild.name}** due to your membership in the following servers:\n\n` + 
+      `${guildList}\n\n` + 
+      `Membership in these servers is not allowed. We kindly ask that you leave them.\n` + 
+      `Once you've done so, you may appeal for an unban.`)
       .setColor("Red");
 
     const button = new ButtonBuilder()

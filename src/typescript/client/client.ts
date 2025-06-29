@@ -2,7 +2,8 @@ import { Client, GatewayIntentBits } from "discord.js";
 import logger from "../logging/logger.js";
 import verifySlashCommands from "../verify/slashCommands.js";
 import initializeSlashCommands from "../commands/initializeSlashCommands.js";
-import commandHandler from "../slashCommandHandler.js";
+import commandHandler from "../handler/slashCommandHandler.js";
+import buttonHandler from "../handler/buttonHandler.js";
 
 const client = new Client({
   intents: [
@@ -35,6 +36,8 @@ client.on("error", async (error: any) => {
 client.on("interactionCreate", async (interaction) => {
   if (interaction.isChatInputCommand()) {
     await commandHandler(interaction, interaction.commandName);
+  } else if(interaction.isButton()) {
+    await buttonHandler(interaction, interaction.customId);
   }
 });
 
