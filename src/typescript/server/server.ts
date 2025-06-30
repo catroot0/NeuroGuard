@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import { token } from "../config.js";
 import logger from "../logging/logger.js";
 import startBot from "../client/login.js";
-import handleCallback from "./handleCallback.js";
+import handleCallback from "../handler/handleCallback.js";
 
 const app = express();
 const PORT = 3000;

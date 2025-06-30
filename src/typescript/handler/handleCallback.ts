@@ -1,12 +1,14 @@
 import { clientId, redirectUrl, clientSecret } from "../config.js";
 import { Request, Response } from "express";
-import fetchAccessToken from "./fetchAccessToken.js";
-import fetchUserGuilds from "./fetchUserGuilds.js";
+import fetchAccessToken from "../server/fetchAccessToken.js";
+import fetchUserGuilds from "../server/fetchUserGuilds.js";
 import normalizeUserGuilds from "../normalize/userGuild.js";
-import fetchUserIdentity from "./fetchUserIdentity.js";
+import fetchUserIdentity from "../server/fetchUserIdentity.js";
 import logger from "../logging/logger.js";
 import checkForNsfwGuild from "../search/nsfwGuild.js";
 import ban from "../actions/ban.js";
+import getUserData from "../helpers/getUserData.js";
+// import { User } from "discord.js";
 
 async function handleCallback(req: Request, res: Response) {
   console.log("-------------------------------------------");
@@ -49,14 +51,14 @@ async function handleCallback(req: Request, res: Response) {
 
   try {
     const accessToken = await fetchAccessToken(clientId!, clientSecret!, code, redirectUrl!);
-    const rawGuilds = await fetchUserGuilds(accessToken);
-    const user = await fetchUserIdentity(accessToken);
-    const normalizedGuilds = normalizeUserGuilds(rawGuilds);
-
+    const { guilds: normalizedGuilds, identity: identity } = await getUserData(accessToken);
     const [hasNsfwGuild, nsfwGuilds] = await checkForNsfwGuild(normalizedGuilds);
 
     if (hasNsfwGuild) {
-      await ban(user.id, guildId, nsfwGuilds, "Being in an NSFW (porn/condo) server");
+      await ban(identity.id, guildId, nsfwGuilds, "Being in an NSFW (porn/condo) server");
+    } else {
+      await logger.info(`User ${identity.username} (${identity.id}) is not in any NSFW server.`);
+      console.log(`User ${identity.username} (${identity.id}) is not in any NSFW server.`);
     }
   } catch (err: any) {
     console.error("Error during callback processing:", err.response?.data || err.message);

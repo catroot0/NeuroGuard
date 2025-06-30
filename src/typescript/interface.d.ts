@@ -1,3 +1,5 @@
+import { User } from "discord.js";
+
 interface DiscordGuild {
   id: string;
   name: string;
@@ -16,4 +18,9 @@ interface NormalizedGuild {
   isOwner: boolean;
 }
 
-export { DiscordGuild, NormalizedGuild };
+interface UserData {
+  guilds: NormalizedGuild[];
+  identity: User;
+}
+
+export { DiscordGuild, NormalizedGuild, UserData };
