@@ -1,14 +1,10 @@
 import { clientId, redirectUrl, clientSecret } from "../config.js";
 import { Request, Response } from "express";
 import fetchAccessToken from "../server/fetchAccessToken.js";
-import fetchUserGuilds from "../server/fetchUserGuilds.js";
-import normalizeUserGuilds from "../normalize/userGuild.js";
-import fetchUserIdentity from "../server/fetchUserIdentity.js";
 import logger from "../logging/logger.js";
 import checkForNsfwGuild from "../search/nsfwGuild.js";
 import ban from "../actions/ban.js";
 import getUserData from "../helpers/getUserData.js";
-// import { User } from "discord.js";
 
 async function handleCallback(req: Request, res: Response) {
   console.log("-------------------------------------------");
@@ -51,8 +47,14 @@ async function handleCallback(req: Request, res: Response) {
 
   try {
     const accessToken = await fetchAccessToken(clientId!, clientSecret!, code, redirectUrl!);
-    const { guilds: normalizedGuilds, identity: identity } = await getUserData(accessToken);
-    const [hasNsfwGuild, nsfwGuilds] = await checkForNsfwGuild(normalizedGuilds);
+    const { guilds, identity} = (await getUserData(accessToken)) || {};
+
+    if(!guilds || !identity) {
+      await logger.error("Missing userGuilds or identity, returning.");
+      return;
+    }
+    
+    const [hasNsfwGuild, nsfwGuilds] = await checkForNsfwGuild(guilds);
 
     if (hasNsfwGuild) {
       await ban(identity.id, guildId, nsfwGuilds, "Being in an NSFW (porn/condo) server");
