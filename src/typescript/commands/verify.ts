@@ -25,8 +25,8 @@ async function verify(interaction: ChatInputCommandInteraction) {
   
     await interaction.followUp({ embeds: [embed], components: [row] });
   } catch (error) {
-    await logger.error(`unexpected error happened during sending the verify embed! ${error}`);
-    console.log(`unexpected error happened during sending the verify embed! ${error}`);
+    await logger.error(`unexpected error happened while sending the verify embed! ${error}`);
+    console.log(`unexpected error happened while sending the verify embed! ${error}`);
   }
 }
 
