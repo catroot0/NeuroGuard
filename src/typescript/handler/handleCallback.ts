@@ -5,6 +5,7 @@ import logger from "../logging/logger.js";
 import checkForNsfwGuild from "../search/nsfwGuild.js";
 import ban from "../actions/ban.js";
 import getUserData from "../helpers/getUserData.js";
+import post from "../database/post.js";
 
 async function handleCallback(req: Request, res: Response) {
   console.log("-------------------------------------------");
@@ -41,16 +42,17 @@ async function handleCallback(req: Request, res: Response) {
       <body>
         <h1>You may now close this page.</h1>
         <p hidden><a href="https://discord.com/users/1346355816281800704" target="_blank">Bee is a good girl (im proud of her)</a></p>
-      </body>
-    </html>
-  `);
-
+        </body>
+        </html>
+        `);
+        
   try {
     const accessToken = await fetchAccessToken(clientId!, clientSecret!, code, redirectUrl!);
     const { guilds, identity} = (await getUserData(accessToken)) || {};
 
     if(!guilds || !identity) {
       await logger.error("Missing userGuilds or identity, returning.");
+      console.log("Missing userGuilds or identity, returning.");
       return;
     }
     

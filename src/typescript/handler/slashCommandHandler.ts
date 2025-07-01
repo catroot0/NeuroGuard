@@ -1,5 +1,6 @@
-import { ChatInputCommandInteraction } from "discord.js";
+import { ChatInputCommandInteraction, MessageFlags } from "discord.js";
 import verify from "../commands/verify.js";
+import setup from "../commands/setup.js";
 
 async function commandHandler(interaction: ChatInputCommandInteraction, commandName: string) {
   switch (commandName) {
@@ -12,8 +13,12 @@ async function commandHandler(interaction: ChatInputCommandInteraction, commandN
       await verify(interaction);
       break;
     }
+    case "setup": {
+      await setup(interaction);
+      break;
+    }
     default: {
-      await interaction.reply({ content: "Unknown command.", ephemeral: true });
+      await interaction.reply({ content: "Unknown command.", flags: MessageFlags.Ephemeral});
       break;
     }
   }
