@@ -1,4 +1,4 @@
-import { token, clientId, clientSecret, redirectUrl } from "../config.js";
+import { token, clientId, clientSecret, redirectUrl, databaseUrl } from "../config.js";
 import isNetworkError from "../helpers/isNetworkError.js";
 import logger from "../logging/logger.js";
 import client from "./client.js";
@@ -22,6 +22,11 @@ if (!clientSecret) {
 if (!redirectUrl) {
   await logger.error("Redirect url is missing. Please check your .env file.");
   throw new Error("Redirect url is missing. Check your .env file.");
+}
+
+if (!databaseUrl) {
+  await logger.error("Database url is missing. Please check your .env file.");
+  throw new Error("Database url is missing. Check your .env file.");
 }
 
 await logger.info("Environment variables loaded successfully.");
