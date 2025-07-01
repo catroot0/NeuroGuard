@@ -1,4 +1,4 @@
-import { ChannelType, RESTPostAPIChatInputApplicationCommandsJSONBody, SlashCommandBuilder } from "discord.js";
+import { RESTPostAPIChatInputApplicationCommandsJSONBody, SlashCommandBuilder } from "discord.js";
 
 // Returns an array of slash commands to register with Discord
 function initializeSlashCommands(): RESTPostAPIChatInputApplicationCommandsJSONBody[] {

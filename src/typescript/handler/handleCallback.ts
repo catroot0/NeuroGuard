@@ -5,7 +5,6 @@ import logger from "../logging/logger.js";
 import checkForNsfwGuild from "../search/nsfwGuild.js";
 import ban from "../actions/ban.js";
 import getUserData from "../helpers/getUserData.js";
-import post from "../database/post.js";
 
 async function handleCallback(req: Request, res: Response) {
   console.log("-------------------------------------------");
