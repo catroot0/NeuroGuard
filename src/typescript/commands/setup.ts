@@ -1,9 +1,10 @@
 import { ChatInputCommandInteraction, MessageFlags, GuildBasedChannel, APIRole, Role } from "discord.js";
-import { invalidChannelErrorEmbed, invalidRoleErrorEmbed, setupSuccessfulEmbed, setupFailedErrorEmbed } from "../helpers/embeds.js";
+import { invalidChannelErrorEmbed, invalidRoleErrorEmbed, setupSuccessfulEmbed, setupFailedErrorEmbed, invalidAppealLinkErrorEmbed } from "../helpers/embeds.js";
 import logger from "../logging/logger.js";
 import post from "../database/post.js";
 import isTextChannel from "../helpers/isTextChannel.js";
 import isAValidRole from "../helpers/isAValidRole.js";
+import isDiscordLink from "../helpers/isDiscordLink.js";
 
 async function setup(interaction: ChatInputCommandInteraction) {
   try {
@@ -12,11 +13,15 @@ async function setup(interaction: ChatInputCommandInteraction) {
     const appealLink: string = interaction.options.getString("appeal_server", true);
 
     if (!isTextChannel(verifyChannel)) {
-      return interaction.reply({ embeds: [invalidChannelErrorEmbed], flags: [MessageFlags.Ephemeral] });
+      return await interaction.reply({ embeds: [invalidChannelErrorEmbed], flags: [MessageFlags.Ephemeral] });
     }
 
     if (!isAValidRole(memberRole, interaction.guild!.id)) {
-      return interaction.reply({ embeds: [invalidRoleErrorEmbed], flags: [MessageFlags.Ephemeral] });
+      return await interaction.reply({ embeds: [invalidRoleErrorEmbed], flags: [MessageFlags.Ephemeral] });
+    }
+
+    if (!isDiscordLink(appealLink)) {
+      return await interaction.reply({ embeds: [invalidAppealLinkErrorEmbed], flags: [MessageFlags.Ephemeral] })
     }
 
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });

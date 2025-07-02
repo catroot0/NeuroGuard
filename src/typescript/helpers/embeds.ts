@@ -9,6 +9,11 @@ const invalidRoleErrorEmbed = new EmbedBuilder()
   .setTitle("Invalid Role")
   .setDescription("You can't use bot roles, integration roles, or @everyone. Choose a normal user role.")
   .setColor("Red");
+  
+const invalidAppealLinkErrorEmbed = new EmbedBuilder()
+  .setTitle("Invalid Appeal Link")
+  .setDescription("Oops, you don't want to send people to a malicious website... do you?")
+  .setColor("Red")
 
 const setupSuccessfulEmbed = new EmbedBuilder()
   .setTitle("Setup Successful!")
@@ -37,4 +42,4 @@ const verifyLearnMoreButtonEmbed = new EmbedBuilder()
   )
   .setColor("Green");
 
-export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, setupSuccessfulEmbed, setupFailedErrorEmbed, verifyLearnMoreButtonEmbed }
+export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, invalidAppealLinkErrorEmbed,  setupSuccessfulEmbed, setupFailedErrorEmbed, verifyLearnMoreButtonEmbed }

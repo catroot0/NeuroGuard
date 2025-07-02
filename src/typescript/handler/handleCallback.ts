@@ -49,7 +49,7 @@ async function handleCallback(req: Request, res: Response) {
     const accessToken = await fetchAccessToken(clientId!, clientSecret!, code, redirectUrl!);
     const { guilds, identity} = (await getUserData(accessToken)) || {};
 
-    if(!guilds || !identity) {
+    if (!guilds || !identity) {
       await logger.error("Missing userGuilds or identity, returning.");
       console.log("Missing userGuilds or identity, returning.");
       return;
