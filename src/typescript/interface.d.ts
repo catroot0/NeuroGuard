@@ -23,4 +23,23 @@ interface UserData {
   identity: User;
 }
 
-export { DiscordGuild, NormalizedGuild, UserData };
+interface GuildPayload {
+  serverId: string;
+  appealServer: string;
+  memberRole: string;
+  verifyChannel: string;
+}
+
+interface GuildData {
+  id: string;
+  [key: string]: any;
+}
+
+interface GuildResponse {
+  key: string;
+  data: GuildData;
+}
+
+
+
+export { DiscordGuild, NormalizedGuild, UserData, GuildPayload, GuildResponse };

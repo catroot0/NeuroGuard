@@ -2,9 +2,10 @@ import axios from "axios";
 import logger from "../logging/logger.js";
 import get from "./get.js";
 import { databaseUrl } from "../config.js";
+import { GuildResponse } from "../interface.js";
 
 async function remove(guildId: string) {
-  const match = await get(guildId);
+  const match: GuildResponse | null = await get(guildId);
   if (!match) {
     await logger.info("Guild not found in database, cannot be deleted.");
     console.log("Guild not found in database, cannot delete be deleted.");

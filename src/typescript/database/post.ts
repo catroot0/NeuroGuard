@@ -3,13 +3,13 @@ import { databaseUrl } from "../config.js";
 import logger from "../logging/logger.js";
 
 async function post(guildId: string, appealLink: string, memberRoleId: string, verifyChannelId: string): Promise<boolean> {
-  const data = { serverId: guildId, appealServer: appealLink, memberRole: memberRoleId, verifyChannel: verifyChannelId };
+  const data = { id: guildId, appealLink, memberRole: memberRoleId, verifyChannel: verifyChannelId }; // ✅ added id field
 
   try {
     await logger.info(`Posting appeal link for guild: ${guildId}`);
     console.log(`Posting appeal link for guild: ${guildId}`);
 
-    const res = await axios.post(`${databaseUrl}.json`, data);
+    const res = await axios.post(`${databaseUrl}/guilds.json`, data);
 
     if (res.status >= 200 && res.status < 300) {
       await logger.info("Post successful.");

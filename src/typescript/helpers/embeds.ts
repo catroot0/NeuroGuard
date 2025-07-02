@@ -11,8 +11,17 @@ const invalidRoleErrorEmbed = new EmbedBuilder()
   .setColor("Red");
   
 const invalidAppealLinkErrorEmbed = new EmbedBuilder()
-  .setTitle("Invalid Appeal Link")
-  .setDescription("Oops, you don't want to send people to a malicious website... do you?")
+  .setTitle("🚧 Something went wrong")
+  .setDescription(
+  "Yeahhh so... I messed something up here and the appeal system is kinda broken right now 😅" +
+  "\n\nWhile I fix it, just follow [this tutorial](https://www.youtube.com/watch?v=dQw4w9WgXcQ) — it should explain everything better than I can."
+  )
+  .setColor("Orange")
+  .setFooter({ text: "devs r doing their best fr" });
+
+const isInDatabaseErrorEmbed = new EmbedBuilder()
+  .setTitle("Setup Failed")
+  .setDescription("Your server is already set up. if you think this is a mistake please use /reset")
   .setColor("Red")
 
 const setupSuccessfulEmbed = new EmbedBuilder()
@@ -42,4 +51,4 @@ const verifyLearnMoreButtonEmbed = new EmbedBuilder()
   )
   .setColor("Green");
 
-export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, invalidAppealLinkErrorEmbed,  setupSuccessfulEmbed, setupFailedErrorEmbed, verifyLearnMoreButtonEmbed }
+export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, invalidAppealLinkErrorEmbed, isInDatabaseErrorEmbed, setupSuccessfulEmbed, setupFailedErrorEmbed, verifyLearnMoreButtonEmbed }

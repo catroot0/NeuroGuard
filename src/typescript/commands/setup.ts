@@ -1,10 +1,11 @@
 import { ChatInputCommandInteraction, MessageFlags, GuildBasedChannel, APIRole, Role } from "discord.js";
-import { invalidChannelErrorEmbed, invalidRoleErrorEmbed, setupSuccessfulEmbed, setupFailedErrorEmbed, invalidAppealLinkErrorEmbed } from "../helpers/embeds.js";
+import { invalidChannelErrorEmbed, invalidRoleErrorEmbed, setupSuccessfulEmbed, setupFailedErrorEmbed, invalidAppealLinkErrorEmbed, isInDatabaseErrorEmbed } from "../helpers/embeds.js";
 import logger from "../logging/logger.js";
 import post from "../database/post.js";
 import isTextChannel from "../helpers/isTextChannel.js";
 import isAValidRole from "../helpers/isAValidRole.js";
 import isDiscordLink from "../helpers/isDiscordLink.js";
+import isInDatabase from "../helpers/isInDatabase.js";
 
 async function setup(interaction: ChatInputCommandInteraction) {
   try {
@@ -22,6 +23,10 @@ async function setup(interaction: ChatInputCommandInteraction) {
 
     if (!isDiscordLink(appealLink)) {
       return await interaction.reply({ embeds: [invalidAppealLinkErrorEmbed], flags: [MessageFlags.Ephemeral] })
+    }
+
+    if (await isInDatabase(interaction.guild!.id)) {
+      return await interaction.reply({ embeds: [isInDatabaseErrorEmbed], flags: [MessageFlags.Ephemeral] })
     }
 
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
