@@ -1,11 +1,10 @@
 import { ChannelType, GuildBasedChannel } from "discord.js";
 
 function isTextChannel(channel: GuildBasedChannel): boolean {
-  if (channel.type !== ChannelType.GuildText) {
-    return false;
-  } else {
-    return true
-  }
+  return [
+    ChannelType.GuildText,
+    ChannelType.GuildAnnouncement,
+  ].includes(channel.type);
 }
 
-export default isTextChannel
+export default isTextChannel;
