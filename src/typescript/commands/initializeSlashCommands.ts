@@ -37,7 +37,10 @@ function initializeSlashCommands(): RESTPostAPIChatInputApplicationCommandsJSONB
           .setName("appeal_server")
           .setDescription("Invite link of your appeal server.")
           .setRequired(true)
-      )
+      ),
+    new SlashCommandBuilder()
+      .setName("reset")
+      .setDescription("Resets the bot config for your server")
   ];
 
   return rawCommands.map((command) => command.toJSON());

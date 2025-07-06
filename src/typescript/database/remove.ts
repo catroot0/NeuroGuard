@@ -1,29 +1,30 @@
 import axios from "axios";
 import logger from "../logging/logger.js";
-import get from "./get.js";
 import { databaseUrl } from "../config.js";
 import { GuildResponse } from "../interface.js";
 
-async function remove(guildId: string) {
-  const match: GuildResponse | null = await get(guildId);
-  if (!match) {
-    await logger.info("Guild not found in database, cannot be deleted.");
-    console.log("Guild not found in database, cannot delete be deleted.");
-    return;
-  }
-
+async function remove(match: GuildResponse): Promise<boolean> {
   try {
-    await logger.info(`Deleting guild: ${guildId} from database`);
-    console.log(`Deleting guild: ${guildId} from database`);
+    await logger.info(`Deleting guild: ${match.data.id} from database`);
+    console.log(`Deleting guild: ${match.data.id} from database`);
 
-    await axios.delete(`${databaseUrl}/${match.key}.json`);
+    const res = await axios.delete(`${databaseUrl}/guilds/${match.key}.json`);
 
-    await logger.info("Delete successful.");
-    console.log("Delete successful.");
+    if (res.status >= 200 && res.status < 300) {
+      await logger.info("Delete successful.");
+      console.log("Delete successful:", res.status);
+      return true;
+    } else {
+      await logger.error(`Unexpected status code: ${res.status}`);
+      console.error("Unexpected status code:", res.status);
+      return false;
+    }
   } catch (error) {
     await logger.error("Error deleting guild.");
+    await logger.error(error);
     console.error("Error deleting guild:", error);
+    return false;
   }
 }
 
-export default remove
+export default remove;

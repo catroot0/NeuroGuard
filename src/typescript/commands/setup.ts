@@ -13,23 +13,23 @@ async function setup(interaction: ChatInputCommandInteraction) {
     const memberRole: Role | APIRole = interaction.options.getRole("member_role", true);
     const appealLink: string = interaction.options.getString("appeal_server", true);
 
+    await interaction.deferReply({flags: [MessageFlags.Ephemeral]})
+
     if (!isTextChannel(verifyChannel)) {
-      return await interaction.reply({ embeds: [invalidChannelErrorEmbed], flags: [MessageFlags.Ephemeral] });
+      return await interaction.followUp({ embeds: [invalidChannelErrorEmbed]});
     }
 
     if (!isAValidRole(memberRole, interaction.guild!.id)) {
-      return await interaction.reply({ embeds: [invalidRoleErrorEmbed], flags: [MessageFlags.Ephemeral] });
+      return await interaction.followUp({ embeds: [invalidRoleErrorEmbed]});
     }
 
     if (!isDiscordLink(appealLink)) {
-      return await interaction.reply({ embeds: [invalidAppealLinkErrorEmbed], flags: [MessageFlags.Ephemeral] })
+      return await interaction.followUp({ embeds: [invalidAppealLinkErrorEmbed] })
     }
 
     if (await isInDatabase(interaction.guild!.id)) {
-      return await interaction.reply({ embeds: [isInDatabaseErrorEmbed], flags: [MessageFlags.Ephemeral] })
+      return await interaction.followUp({ embeds: [isInDatabaseErrorEmbed] })
     }
-
-    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
 
     const postedSuccessfully = await post(interaction.guild!.id, appealLink, memberRole.id, verifyChannel.id)
 

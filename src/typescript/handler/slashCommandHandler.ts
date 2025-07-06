@@ -1,11 +1,12 @@
 import { ChatInputCommandInteraction, MessageFlags } from "discord.js";
 import verify from "../commands/verify.js";
 import setup from "../commands/setup.js";
+import reset from "../commands/reset.js";
 
 async function commandHandler(interaction: ChatInputCommandInteraction, commandName: string) {
   switch (commandName) {
     case "echo": {
-      const input = interaction.options.getString("input");
+      const input = interaction.options.getString("message");
       await interaction.reply(input ?? "No input provided.");
       break;
     }
@@ -15,6 +16,10 @@ async function commandHandler(interaction: ChatInputCommandInteraction, commandN
     }
     case "setup": {
       await setup(interaction);
+      break;
+    }
+    case "reset": {
+      await reset(interaction);
       break;
     }
     default: {

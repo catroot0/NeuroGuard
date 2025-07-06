@@ -3,14 +3,14 @@ import logger from "../logging/logger.js";
 import { databaseUrl } from "../config.js";
 import { GuildResponse } from "../interface.js";
 
-const MAX_RETRIES = 3;
-const RETRY_DELAY_MS = 300;
+const maxRetries = 3;
+const retryDelayMs = 300;
 
 async function get(guildId: string): Promise<GuildResponse | null> {
-  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
-      await logger.info(`Fetching guild with ID: ${guildId} (attempt ${attempt + 1})`);
-      console.log(`Fetching guild with ID: ${guildId} (attempt ${attempt + 1})`);
+      await logger.info(`Fetching guild with ID: ${guildId} (Attempt ${attempt + 1})`);
+      console.log(`Fetching guild with ID: ${guildId} (Attempt ${attempt + 1})`);
 
       const res = await axios.get(`${databaseUrl}/guilds.json`, {
         params: {
@@ -23,8 +23,8 @@ async function get(guildId: string): Promise<GuildResponse | null> {
       const keys = Object.keys(data);
 
       if (keys.length === 0) {
-        if (attempt < MAX_RETRIES - 1) {
-          await new Promise(res => setTimeout(res, RETRY_DELAY_MS));
+        if (attempt < maxRetries - 1) {
+          await new Promise(res => setTimeout(res, retryDelayMs));
           continue;
         }
 
@@ -42,7 +42,8 @@ async function get(guildId: string): Promise<GuildResponse | null> {
       return { key, data: guildData };
     } catch (error) {
       await logger.error("Error fetching guild.");
-      console.error("Error fetching guild:", error);
+      await logger.error(error);
+      console.error("Error fetching guild");
       return null;
     }
   }

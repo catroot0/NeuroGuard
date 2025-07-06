@@ -3,6 +3,7 @@ import { token } from "../config.js";
 import logger from "../logging/logger.js";
 import startBot from "../client/login.js";
 import handleCallback from "../handler/handleCallback.js";
+import { redirectUrl } from "../config.js";
 
 const app = express();
 const PORT = 3000;
@@ -15,8 +16,8 @@ app.get("/callback", handleCallback);
 
 app.listen(PORT, async () => {
   try {
-    console.log(`Server is running at http://localhost:${PORT}`);
-    await logger.info(`Server is running at http://localhost:${PORT}`);
+    console.log(`Server is running at ${redirectUrl!.replace(/\/callback$/, "")}`);
+    await logger.info(`Server is running at ${redirectUrl!.replace(/\/callback$/, "")}`);
 
     await startBot(token!);
   } catch (err: any) {

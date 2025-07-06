@@ -21,12 +21,12 @@ const invalidAppealLinkErrorEmbed = new EmbedBuilder()
 
 const isInDatabaseErrorEmbed = new EmbedBuilder()
   .setTitle("Setup Failed")
-  .setDescription("Your server is already set up. if you think this is a mistake please use /reset")
+  .setDescription("Neuro guard is already set up. if you think this is a mistake please use /reset")
   .setColor("Red")
 
 const setupSuccessfulEmbed = new EmbedBuilder()
   .setTitle("Setup Successful!")
-  .setDescription("Your server has been configured successfully. You can now use all features.")
+  .setDescription("Neuro guard has been configured successfully. You can now use all features.")
   .setColor("Green")
   .setFooter({ text: "Thank you for using Neuro Guard!" });
 
@@ -35,6 +35,16 @@ const setupFailedErrorEmbed = new EmbedBuilder()
   .setDescription("Something went wrong while saving your configuration. Please try again later or contact support.")
   .setColor("Red")
   .setFooter({ text: "If this issue persists, please report it." });
+
+const IsNotSetupErrorEmbed = new EmbedBuilder()
+  .setTitle("Bot is not set up")
+  .setDescription("Neuro guard is not set up in this server. please setup the bot by using /setup command.")
+  .setColor("Orange")
+
+const resetSuccessfulEmbed = new EmbedBuilder()
+  .setTitle("Reset Successful")
+  .setDescription("Neuro guard has been reset successfully. in order to setup neuro guard again use /setup command.")
+  .setColor("Green")
 
 const verifyLearnMoreButtonEmbed = new EmbedBuilder()
   .setTitle("How Verification Works")
@@ -51,4 +61,4 @@ const verifyLearnMoreButtonEmbed = new EmbedBuilder()
   )
   .setColor("Green");
 
-export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, invalidAppealLinkErrorEmbed, isInDatabaseErrorEmbed, setupSuccessfulEmbed, setupFailedErrorEmbed, verifyLearnMoreButtonEmbed }
+export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, invalidAppealLinkErrorEmbed, isInDatabaseErrorEmbed, setupSuccessfulEmbed, resetSuccessfulEmbed, setupFailedErrorEmbed, IsNotSetupErrorEmbed, verifyLearnMoreButtonEmbed }
