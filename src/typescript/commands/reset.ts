@@ -2,18 +2,15 @@ import { ChatInputCommandInteraction, MessageFlags } from "discord.js";
 import { failedToFetchGuildErrorEmbed, IsNotSetupErrorEmbed, resetSuccessfulEmbed } from "../helpers/embeds.js";
 import remove from "../database/remove.js";
 import logger from "../logging/logger.js";
-import get from "../database/get.js";
+import { GuildStore } from "../database/cache.js";
 
 async function reset(interaction: ChatInputCommandInteraction) {
   try {
     await interaction.deferReply({ flags: [MessageFlags.Ephemeral] });
 
-    const match = await get(interaction.guild!.id);
-    if (match === false) {
+    const match = GuildStore.getById(interaction.guild!.id);
+    if (!match) {
       await interaction.followUp({ embeds: [IsNotSetupErrorEmbed] });
-      return;
-    } else if (match === null) {
-      await interaction.followUp({ embeds: [failedToFetchGuildErrorEmbed] });
       return;
     }
 

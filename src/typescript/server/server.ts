@@ -4,6 +4,7 @@ import logger from "../logging/logger.js";
 import startBot from "../client/login.js";
 import handleCallback from "../handler/handleCallback.js";
 import { redirectUrl, port, host } from "../config.js";
+import initializeGuildStore from "../helpers/initializeGuildStore.js";
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.listen(Number(port), host, async () => {
     console.log(`Server is running at ${baseRedirect}`); 
     await logger.info(`Server is running at ${baseRedirect}`); 
  
+    await initializeGuildStore()
+
     await startBot(token!);
   } catch (error: any) {
     console.error("Failed to start bot:", error.message);

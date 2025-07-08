@@ -1,7 +1,7 @@
-import get from "../database/get.js"
+import { GuildStore } from "../database/cache.js";
 
-async function isInDatabase(guildId: string): Promise<boolean> {
-  return Boolean(await get(guildId));
+function isInDatabase(guildId: string): boolean {
+  return Boolean(GuildStore.getById(guildId));
 }
 
 export default isInDatabase

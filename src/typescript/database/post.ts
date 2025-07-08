@@ -1,6 +1,7 @@
 import axios from "axios";
 import { databaseUrl } from "../config.js";
 import logger from "../logging/logger.js";
+import { GuildStore } from "./cache.js";
 
 async function post(
   guildId: string,
@@ -24,6 +25,7 @@ async function post(
     if (res.status >= 200 && res.status < 300) {
       await logger.info("Post successful.");
       console.log("Post successful:", res.data);
+      GuildStore.set(guildId, data);
       return true;
     } else {
       await logger.error(`Unexpected response status: ${res.status}`);

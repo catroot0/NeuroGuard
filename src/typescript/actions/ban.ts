@@ -3,6 +3,7 @@ import { NormalizedGuild } from "../interface.js";
 import client from "../client/client.js";
 import logger from "../logging/logger.js";
 import sendMessage from "./sendMessage.js";
+import { GuildStore } from "../database/cache.js";
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -26,7 +27,7 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
     const button = new ButtonBuilder()
       .setLabel("Appeal Server")
       .setStyle(ButtonStyle.Link)
-      .setURL("https://www.google.com"); //! temp url
+      .setURL(GuildStore.getById(guildId)!.appealLink); //! temp url
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
 

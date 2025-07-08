@@ -33,7 +33,7 @@ async function setup(interaction: ChatInputCommandInteraction) {
     }
 
     const postedSuccessfully = await post(interaction.guild!.id, appealLink, memberRole.id, verifyChannel.id)
-    const changedChannelPermsSuccessfully = await changeChannelPermission(interaction.guild!.id, verifyChannel.id)
+    const changedChannelPermsSuccessfully = await changeChannelPermission(interaction.guild!.id, verifyChannel.id, memberRole.id)
     if (postedSuccessfully && changedChannelPermsSuccessfully) {
       await interaction.followUp({ embeds: [setupSuccessfulEmbed] });
     } else {

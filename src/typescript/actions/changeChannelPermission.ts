@@ -2,7 +2,7 @@ import client from "../client/client.js";
 import logger from "../logging/logger.js";
 import { TextChannel } from "discord.js";
 
-async function changeChannelPermission(guildId: string, channelId: string): Promise<boolean | void> {
+async function changeChannelPermission(guildId: string, channelId: string, memberRoleId: string): Promise<boolean | void> {
   try {
     const guild = client.guilds.cache.get(guildId);
 
@@ -21,12 +21,26 @@ async function changeChannelPermission(guildId: string, channelId: string): Prom
     }
 
     await logger.info(`Updating permissions for channel ${channel.id} in guild ${guild.id}.`);
+    const everyoneRole = guild.roles.everyone;
+    const memberRole = await guild.roles.fetch(memberRoleId);
 
-    await channel.permissionOverwrites.edit(guild.roles.everyone, {
+    if (!memberRole) {
+      console.error(`Role ${memberRoleId} not found in guild ${guildId}`);
+      await logger.error(`Role ${memberRoleId} not found in guild ${guildId}`);
+      return;
+    }
+
+    await channel.permissionOverwrites.edit(everyoneRole, {
       SendMessages: true,
       ViewChannel: true,
       UseApplicationCommands: true
     });
+
+    await channel.permissionOverwrites.edit(memberRole, {
+      ViewChannel: false
+    });
+
+    await guild.roles.everyone.setPermissions([]);
 
     const successMsg = `Permissions successfully updated for channel ${channel.id} in guild ${guild.id}.`;
     console.log(successMsg);

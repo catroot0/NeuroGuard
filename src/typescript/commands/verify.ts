@@ -2,9 +2,14 @@ import { ChatInputCommandInteraction, EmbedBuilder, MessageFlags, ActionRowBuild
 import { clientId, redirectUrl } from "../config.js";
 import createOAuthURL from "../server/createOAuthURL.js";
 import logger from "../logging/logger.js";
+import isInDatabase from "../helpers/isInDatabase.js";
 
 async function verify(interaction: ChatInputCommandInteraction) {
   try {
+    if (!isInDatabase(interaction.guild!.id)) {
+      return await interaction.reply("This bot is not setup for this server. please setup the bot using /setup")
+    }
+
     const authURL = createOAuthURL(clientId!, redirectUrl!, interaction.guild!.id);
     await interaction.deferReply({ flags: MessageFlags.Ephemeral });
   
