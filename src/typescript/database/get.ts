@@ -6,7 +6,7 @@ import { GuildResponse } from "../interface.js";
 const maxRetries = 3;
 const retryDelayMs = 300;
 
-async function get(guildId: string): Promise<GuildResponse | null> {
+async function get(guildId: string): Promise<GuildResponse | false | null> {
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
       await logger.info(`Fetching guild with ID: ${guildId} (Attempt ${attempt + 1})`);
@@ -30,7 +30,7 @@ async function get(guildId: string): Promise<GuildResponse | null> {
 
         await logger.info("Guild not found in database.");
         console.log("Guild not found in database.");
-        return null;
+        return false;
       }
 
       const key = keys[0];

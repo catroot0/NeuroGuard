@@ -6,6 +6,7 @@ import isTextChannel from "../helpers/isTextChannel.js";
 import isAValidRole from "../helpers/isAValidRole.js";
 import isDiscordLink from "../helpers/isDiscordLink.js";
 import isInDatabase from "../helpers/isInDatabase.js";
+import changeChannelPermission from "../actions/changeChannelPermission.js";
 
 async function setup(interaction: ChatInputCommandInteraction) {
   try {
@@ -32,8 +33,8 @@ async function setup(interaction: ChatInputCommandInteraction) {
     }
 
     const postedSuccessfully = await post(interaction.guild!.id, appealLink, memberRole.id, verifyChannel.id)
-
-    if (postedSuccessfully) {
+    const changedChannelPermsSuccessfully = await changeChannelPermission(interaction.guild!.id, verifyChannel.id)
+    if (postedSuccessfully && changedChannelPermsSuccessfully) {
       await interaction.followUp({ embeds: [setupSuccessfulEmbed] });
     } else {
       await interaction.followUp({ embeds: [setupFailedErrorEmbed] });

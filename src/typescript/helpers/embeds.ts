@@ -61,4 +61,10 @@ const verifyLearnMoreButtonEmbed = new EmbedBuilder()
   )
   .setColor("Green");
 
-export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, invalidAppealLinkErrorEmbed, isInDatabaseErrorEmbed, setupSuccessfulEmbed, resetSuccessfulEmbed, setupFailedErrorEmbed, IsNotSetupErrorEmbed, verifyLearnMoreButtonEmbed }
+
+const failedToFetchGuildErrorEmbed = new EmbedBuilder()
+  .setTitle("Failed to Fetch Guild")
+  .setDescription("Unable to retrieve guild data from the database. This may be due to network issues or server connectivity. Please try again later.")
+  .setColor("Red");
+
+export { invalidChannelErrorEmbed, invalidRoleErrorEmbed, invalidAppealLinkErrorEmbed, isInDatabaseErrorEmbed, setupSuccessfulEmbed, resetSuccessfulEmbed, setupFailedErrorEmbed, IsNotSetupErrorEmbed, verifyLearnMoreButtonEmbed, failedToFetchGuildErrorEmbed }
