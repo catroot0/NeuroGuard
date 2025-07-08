@@ -3,10 +3,9 @@ import { token } from "../config.js";
 import logger from "../logging/logger.js";
 import startBot from "../client/login.js";
 import handleCallback from "../handler/handleCallback.js";
-import { redirectUrl } from "../config.js";
+import { redirectUrl, port, host } from "../config.js";
 
 const app = express();
-const PORT = 3000;
 
 app.get("/", (_: Request, res: Response) => {
   res.redirect("https://www.google.com/");
@@ -14,16 +13,18 @@ app.get("/", (_: Request, res: Response) => {
 
 app.get("/callback", handleCallback);
 
-app.listen(PORT, async () => {
+app.listen(Number(port), host, async () => {
   try {
-    console.log(`Server is running at ${redirectUrl!.replace(/\/callback$/, "")}`);
-    await logger.info(`Server is running at ${redirectUrl!.replace(/\/callback$/, "")}`);
-
+    const baseRedirect = redirectUrl!.replace(/\/callback$/, ""); 
+ 
+    console.log(`Server is running at ${baseRedirect}`); 
+    await logger.info(`Server is running at ${baseRedirect}`); 
+ 
     await startBot(token!);
-  } catch (err: any) {
-    console.error("Failed to start bot:", err.message);
+  } catch (error: any) {
+    console.error("Failed to start bot:", error.message);
     await logger.error("Failed to start bot.");
-    await logger.error(err);
+    await logger.error(error);
     process.exit(1);
   }
 });
