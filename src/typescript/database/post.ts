@@ -9,6 +9,7 @@ async function post(
   memberRoleId: string,
   verifyChannelId: string
 ): Promise<boolean> {
+  // Prepare the data object to send to the database
   const data = {
     id: guildId,
     appealLink,
@@ -17,26 +18,32 @@ async function post(
   };
 
   try {
+    // Log the start of the post operation
     await logger.info(`Posting guild data for ID: ${guildId}`);
     console.log(`Posting guild data for ID: ${guildId}`);
 
+    // Send a POST request to the database URL with the guild data
     const res = await axios.post(`${databaseUrl}/guilds.json`, data);
 
+    // Check if the response status indicates success
     if (res.status >= 200 && res.status < 300) {
+      // Log success and update the local GuildStore cache
       await logger.info("Post successful.");
       console.log("Post successful:", res.data);
       GuildStore.set(guildId, data);
-      return true;
+      return true; // Indicate success
     } else {
+      // Log unexpected HTTP status codes
       await logger.error(`Unexpected response status: ${res.status}`);
       console.error("Unexpected response status:", res.status);
-      return false;
+      return false; // Indicate failure
     }
   } catch (error) {
+    // Log errors from the HTTP request or other failures
     await logger.error("Failed to post guild data");
     await logger.error(error);
     console.error("Failed to post guild data");
-    return false;
+    return false; // Indicate failure
   }
 }
 

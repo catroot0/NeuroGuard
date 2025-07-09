@@ -1,11 +1,12 @@
 import axios from "axios";
+import { databaseUrl } from "../config.js";
 import { GuildStore } from "../database/cache.js";
 
 async function initializeGuildStore() {
   console.log("[GuildStore] Initializing from Firebase...");
 
   try {
-    const res = await axios.get("https://guilds-19a6a-default-rtdb.firebaseio.com/guilds.json");
+    const res = await axios.get(databaseUrl!);
 
     if (res.data) {
       GuildStore.setAll(res.data);
