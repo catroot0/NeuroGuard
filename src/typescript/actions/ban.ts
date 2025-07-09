@@ -27,7 +27,7 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
     const button = new ButtonBuilder()
       .setLabel("Appeal Server")
       .setStyle(ButtonStyle.Link)
-      .setURL(GuildStore.getById(guildId)!.appealLink); //! temp url
+      .setURL(GuildStore.getById(guildId)!.appealLink);
 
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
 
@@ -48,6 +48,7 @@ async function ban(userId: string, guildId: string, nsfwGuilds: NormalizedGuild[
     }
   } catch (error) {
     await logger.error(`Could not ban user ${userId}: ${error}`);
+    console.error(`Could not ban user ${userId}: ${error}`);
   }
 }
 

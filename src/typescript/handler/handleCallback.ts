@@ -5,6 +5,8 @@ import logger from "../logging/logger.js";
 import checkForNsfwGuild from "../search/nsfwGuild.js";
 import ban from "../actions/ban.js";
 import getUserData from "../helpers/getUserData.js";
+import giveMemberRole from "../actions/giveMemberRole.js";
+import { GuildStore } from "../database/cache.js";
 
 async function handleCallback(req: Request, res: Response) {
   console.log("-------------------------------------------");
@@ -62,6 +64,8 @@ async function handleCallback(req: Request, res: Response) {
     } else {
       await logger.info(`User ${identity.username} (${identity.id}) is not in any NSFW server.`);
       console.log(`User ${identity.username} (${identity.id}) is not in any NSFW server.`);
+      const guildData = GuildStore.getById(guildId);
+      await giveMemberRole(guildData!.id, identity.id);
     }
   } catch (err: any) {
     console.error("Error during callback processing:", err.response?.data || err.message);
