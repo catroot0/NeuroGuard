@@ -78,7 +78,7 @@ token="your_bot_token_here"
   }
 }
 ```
-> **Note:** Yes. this rules are not very secure, but im just too lazy to change the code :>. just don't let other people have your database url and you're good :3
+> **Note:** Yes. these rules are not very secure, but im just too lazy to change the code :>. just don't let other people have your database url and you're good :3
 
 ---
 
@@ -94,30 +94,36 @@ To make your bot accessible via a custom URL and keep it running 24/7, you’ll 
    Rent a VPS from providers such as DigitalOcean, Linode, Vultr, or AWS Lightsail. Choose an OS you are comfortable with (Ubuntu is popular).
 
 3. **Point Your Domain to the VPS**  
-   - In your domain registrar’s DNS settings, add an A Record pointing your domain (e.g., yourdomain.com) to the VPS IP address.  
-   - Optionally, set up a CNAME Record for www.yourdomain.com pointing to yourdomain.com.
+   - In your domain registrar’s DNS settings, add an A Record pointing your domain (e.g., `yourdomain.com`) to the VPS IP address.  
+   - Optionally, set up a CNAME Record for `www.yourdomain.com` pointing to `yourdomain.com`.
 
 4. **Deploy and Run NeuroGuard on the VPS**  
    - SSH into your VPS.  
-   - Clone the NeuroGuard repository and follow the installation steps below.  
+   - Clone the NeuroGuard repository and follow the installation.  
    - Use a process manager like pm2 to keep the bot running continuously.
-
-5. **Configure HTTPS (Optional but Recommended)**  
-   To secure your OAuth callbacks and API endpoints:  
-   - Install Certbot on your VPS.  
-   - Obtain and configure free SSL certificates from Let’s Encrypt.  
-   - Use a reverse proxy like Nginx to serve your bot over HTTPS.
 
 ---
 
+### Add Redirect URI to Discord Developer Portal
+
+To ensure OAuth2 works correctly, you **must add your bot's redirect URL to the Discord Developer Portal**:
+
+1. In your application's page, go to the **OAuth2** tab.
+2. Scroll down to the **Redirects** section.
+3. Click **"Add Redirect"** and enter:
+
+---
 
 ### 5. Finalize `example.env`
 
 Ensure your `example.env` contains all credentials properly wrapped in quotes, e.g.:
 
-
+```env
 clientId="your_application_id_here"  
 clientSecret="your_client_secret_here"  
 token="your_bot_token_here"  
 firebaseDatabaseURL="your_firebase_database_url_here"  
 redirectUrl = "https://yourdomain.com/callback"
+port = "your_vps_port"
+host = "your_vps_ip"
+```
