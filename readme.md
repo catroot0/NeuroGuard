@@ -28,8 +28,6 @@
 
 ### Installation Steps
 
-### Installation Steps
-
 1. **Clone the Repository:**
 
 ```bash
@@ -84,11 +82,42 @@ token="your_bot_token_here"
 
 ---
 
+
+### Buy a Domain and Run the Bot on a VPS
+
+To make your bot accessible via a custom URL and keep it running 24/7, you’ll want to:
+
+1. **Buy a Domain Name**  
+   Purchase a domain from registrars like Namecheap, GoDaddy, or Google Domains. Choose a domain that suits your bot or project.
+
+2. **Set Up a VPS**  
+   Rent a VPS from providers such as DigitalOcean, Linode, Vultr, or AWS Lightsail. Choose an OS you are comfortable with (Ubuntu is popular).
+
+3. **Point Your Domain to the VPS**  
+   - In your domain registrar’s DNS settings, add an A Record pointing your domain (e.g., yourdomain.com) to the VPS IP address.  
+   - Optionally, set up a CNAME Record for www.yourdomain.com pointing to yourdomain.com.
+
+4. **Deploy and Run NeuroGuard on the VPS**  
+   - SSH into your VPS.  
+   - Clone the NeuroGuard repository and follow the installation steps below.  
+   - Use a process manager like pm2 to keep the bot running continuously.
+
+5. **Configure HTTPS (Optional but Recommended)**  
+   To secure your OAuth callbacks and API endpoints:  
+   - Install Certbot on your VPS.  
+   - Obtain and configure free SSL certificates from Let’s Encrypt.  
+   - Use a reverse proxy like Nginx to serve your bot over HTTPS.
+
+---
+
+
 ### 5. Finalize `example.env`
 
 Ensure your `example.env` contains all credentials properly wrapped in quotes, e.g.:
 
+
 clientId="your_application_id_here"  
 clientSecret="your_client_secret_here"  
 token="your_bot_token_here"  
-firebaseDatabaseURL="your_firebase_database_url_here"
+firebaseDatabaseURL="your_firebase_database_url_here"  
+redirectUrl = "https://yourdomain.com/callback"
