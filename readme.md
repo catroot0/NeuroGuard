@@ -12,7 +12,7 @@
 - **Detection and automatic banning of users found in NSFW guilds**
 - **Persistent guild configurations stored in Firebase Realtime Database**
 - **Slash command support with automatic registration**
-- **Lightweight and easy to customize**
+- **Lightweight as fuck**
 
 ---
 
