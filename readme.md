@@ -156,16 +156,16 @@ Contributions are welcome! If you want to help improve the bot, follow these ste
 
 1. Fork the repository.
 2. Create a new branch from `master`:
-   - ```bash
+    ```bash
    git checkout -b feature/my-feature-name master
    ```
 3. Make your changes.
 4. Commit your changes:
-   - ```bash
+    ```bash
      git commit -am "Add: your feature description"
      ```
 5. Push to your branch
-   - ```bash
+    ```bash
      git push origin feature/my-feature-name
      ```
 6. Open a pull request targeting the master branch.
