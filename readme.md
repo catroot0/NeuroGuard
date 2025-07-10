@@ -1,27 +1,36 @@
 # NeuroGuard
-A Discord moderation bot designed to help servers to avoid predators. by adding a verify system that looks through the user's server list for any NSFW (porn, condo, etc) server. if found any. ban them
 
-> **WARNING:** This bot is designed to be self-hosted, it means in order to use the bot you have to go though a installation and configurations process. 
+**NeuroGuard** is a Discord moderation bot designed to help servers protect their communities from predators. It uses a user verification system that scans a user's server list for any NSFW servers (porn, condom-related, etc.). If such servers are detected, the bot automatically bans the user.
+
+> **⚠️ WARNING:** This bot is self-hosted. You must complete the installation and configuration process to use it.
+
+---
 
 ## Features
 
 - **User verification via Discord OAuth2**
-- **Detection and automatic banning of users in NSFW guilds**
+- **Detection and automatic banning of users found in NSFW guilds**
 - **Persistent guild configurations stored in Firebase Realtime Database**
-- **Slash command support with automatic command registration**
-- **Persistent guild configurations stored in Firebase Realtime Database**
+- **Slash command support with automatic registration**
+- **Lightweight and easy to customize**
 
-## Installation And Configurations
+---
+
+## Installation & Configuration
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- A VPS (virtual private server)
-- A Domain (.com, .net, .top, etc)
+- Node.js (v14 or higher)  
+- A VPS (Virtual Private Server)  
+- A domain name (e.g., `.com`, `.net`, `.top`)
+
+---
 
 ### Installation Steps
 
-1. **Clone the Repository**:
+### Installation Steps
+
+1. **Clone the Repository:**
 
 ```bash
 git clone https://github.com/drowningdev/NeuroGuard.git
@@ -33,33 +42,53 @@ cd NeuroGuard
 npm install
 ```
 
-3. **Set Up Environment Variables**:
+### 3. Configure Environment Variables
 
-Go to the [Discord Developer Portal](https://discord.com/developers/applications).  
-Click the **"New Application"** button, name your app **"NeuroGuard"**, and confirm that you accept the [Discord Developer Terms of Service](https://support-dev.discord.com/hc/articles/8562894815383-Discord-Developer-Terms-of-Service) and [Developer Policy](https://support-dev.discord.com/hc/articles/8563934450327-Discord-Developer-Policy). Then click **"Create"**.
+- Go to the [Discord Developer Portal](https://discord.com/developers/applications).
+- Click **"New Application"**, name it **"NeuroGuard"**, and accept the Developer Terms of Service and Policy.
+- Copy the **Application ID** from the General Information page.
 
-After creating the app, you'll be redirected to the **General Information** page.  
-Scroll down and copy the **Application ID**.  
-
-Open the [`example.env` file](https://github.com/drowningdev/NeuroGuard/blob/master/example.env) in the project.  
-Find the `clientId` variable, clear its default value, and paste the Application ID you just copied.  
-Make sure it's wrapped in quotes (`"`), like this:  
+Open the `example.env` file in the project directory and update the following:
 ```env
 clientId="your_application_id_here"
 ```
-
-Go back to the **OAuth2** tab in the Developer Portal.  
-Click **"Reset Secret"**, confirm the action, and then click **"Copy"** to copy your new **Client Secret**.  
-Return to the `example.env` file and paste it into the `clientSecret` field, again wrapping it in quotes:
+- Navigate to the **OAuth2** tab, click **"Reset Secret"**, confirm, then copy your **Client Secret**.
+- Paste it into the `clientSecret` field in `example.env`:
 ```env
 clientSecret="your_client_secret_here"
 ```
-
-Now go to the **Bot** tab in the Developer Portal.  
-Scroll down and click **"Reset Token"**, confirm the action, and then click **"Copy"** to copy your new **Bot Token**.  
-Paste it into the `token` field in the `example.env` file:
+- Go to the **Bot** tab, click **"Reset Token"**, confirm, then copy your **Bot Token**.
+- Paste it into the `token` field in `example.env`:
 ```env
 token="your_bot_token_here"
 ```
+---
 
-Your `example.env` file should now contain the correct credentials, each wrapped in quotes to ensure proper formatting.
+### 4. Set Up Firebase Realtime Database
+
+- Visit the [Firebase Console](https://console.firebase.google.com).
+- Create a new project or select an existing one.
+- Navigate to **Build > Realtime Database**, then click **Create Database**.
+- Select the location nearest to your server.
+- Choose **Start in locked mode** and click **Enable**.
+- Go to the **Rules** tab and replace the rules with:
+```json
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+```
+> **Note:** Yes. this rules are not very secure, but im just too lazy to change the code :>. just don't let other people have your database url and you're good :3
+
+---
+
+### 5. Finalize `example.env`
+
+Ensure your `example.env` contains all credentials properly wrapped in quotes, e.g.:
+
+clientId="your_application_id_here"  
+clientSecret="your_client_secret_here"  
+token="your_bot_token_here"  
+firebaseDatabaseURL="your_firebase_database_url_here"
