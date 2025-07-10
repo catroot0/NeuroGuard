@@ -12,7 +12,7 @@ const invalidRoleErrorEmbed = new EmbedBuilder()
   .setDescription("You can't use bot roles, integration roles, or @everyone. Choose a normal user role.")
   .setColor("Red");
 
-// Embed shown when the appeal link system is broken or something went wrong
+// Embed shown when someone tries to put a link that isn't a discord invite link as the appeal link. the youtube link is the rick roll. lmfao
 const invalidAppealLinkErrorEmbed = new EmbedBuilder()
   .setTitle("🚧 Something went wrong")
   .setDescription(
@@ -70,12 +70,6 @@ const verifyLearnMoreButtonEmbed = new EmbedBuilder()
   )
   .setColor("Green");
 
-// Embed shown when there is an issue fetching guild data from the database (e.g., network issues)
-const failedToFetchGuildErrorEmbed = new EmbedBuilder()
-  .setTitle("Failed to Fetch Guild")
-  .setDescription("Unable to retrieve guild data from the database. This may be due to network issues or server connectivity. Please try again later.")
-  .setColor("Red");
-
 // Export all embeds for usage in other parts of the bot
 export {
   invalidChannelErrorEmbed,
@@ -86,6 +80,5 @@ export {
   resetSuccessfulEmbed,
   setupFailedErrorEmbed,
   IsNotSetupErrorEmbed,
-  verifyLearnMoreButtonEmbed,
-  failedToFetchGuildErrorEmbed,
+  verifyLearnMoreButtonEmbed
 };
