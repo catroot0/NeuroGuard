@@ -110,7 +110,10 @@ To ensure OAuth2 works correctly, you **must add your bot's redirect URL to the 
 
 1. In your application's page, go to the **OAuth2** tab.
 2. Scroll down to the **Redirects** section.
-3. Click **"Add Redirect"** and enter:
+3. Click **"Add Redirect"** and enter: `yourdomain.com/callback`
+4. Click **"Save Changes"** at the bottom.
+
+> ⚠️ **Important:** Make sure this matches exactly what you put in your `.env` file as `redirectUrl`. If they don’t match, the OAuth2 flow will fail.
 
 ---
 
@@ -127,3 +130,52 @@ redirectUrl = "https://yourdomain.com/callback"
 port = "your_vps_port"
 host = "your_vps_ip"
 ```
+
+Once its done rename `the example.env` file to `.env`.
+
+---
+
+
+## Compile And Run the Bot
+
+1. Compile the project by running
+```bash
+npm run build
+```
+
+2. Once the compiling process is done run the bot by running 
+```bash
+npm run dev
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! If you want to help improve the bot, follow these steps:
+
+1. Fork the repository.
+2. Create a new branch from `master`:
+   - ```bash
+   git checkout -b feature/my-feature-name master
+   ```
+3. Make your changes.
+4. Commit your changes:
+   - ```bash
+     git commit -am "Add: your feature description"
+     ```
+5. Push to your branch
+   - ```bash
+     git push origin feature/my-feature-name
+     ```
+6. Open a pull request targeting the master branch.
+
+## License
+
+Distributed under the [MIT](https://opensource.org/license/mit) License.
+
+## Contact
+
+- GitHub: [drowningdev](https://github.com/drowningdev/)
+- Email: drowning.dev1@gmail.com
+- Discord: [@catroot0](https://discord.com/users/1358758349054808226)
