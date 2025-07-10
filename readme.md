@@ -35,11 +35,31 @@ npm install
 
 3. **Set Up Environment Variables**:
 
-Go to [discord developer portal](https://discord.com/developers/applications). once you're in click on the "New Application" button. set the name "NeuroGuard" and confirm that you accept [discord developer terms of service](https://support-dev.discord.com/hc/articles/8562894815383-Discord-Developer-Terms-of-Service) and [discord developer policy](https://support-dev.discord.com/hc/articles/8563934450327-Discord-Developer-Policy). and click "Create".
+Go to the [Discord Developer Portal](https://discord.com/developers/applications).  
+Click the **"New Application"** button, name your app **"NeuroGuard"**, and confirm that you accept the [Discord Developer Terms of Service](https://support-dev.discord.com/hc/articles/8562894815383-Discord-Developer-Terms-of-Service) and [Developer Policy](https://support-dev.discord.com/hc/articles/8563934450327-Discord-Developer-Policy). Then click **"Create"**.
 
-Once its created you will be redirected to the bot's general information page. scroll down a bit and you will find application id. click copy. navigate to the [example.env file](https://github.com/drowningdev/NeuroGuard/blob/master/example.env) and find the clientId variable. clear its default value and put your application id that you just copied in it. make sure its a string. it means it must start with a " and also ends with a ".
+After creating the app, you'll be redirected to the **General Information** page.  
+Scroll down and copy the **Application ID**.  
 
-Go back to discord developer portal. navigate to the "OAuth2" page. find the client secret. click "Reset Secret". it will show a pop up to make sure its not a mis click. click "Yes, do it!". once its reset click "Copy". navigate back to the [example.env file](https://github.com/drowningdev/NeuroGuard/blob/master/example.env) and find the "clientSecret" variable. fill it with your client secret that you just copied. 
+Open the [`example.env` file](https://github.com/drowningdev/NeuroGuard/blob/master/example.env) in the project.  
+Find the `clientId` variable, clear its default value, and paste the Application ID you just copied.  
+Make sure it's wrapped in quotes (`"`), like this:  
+```env
+clientId="your_application_id_here"
+```
 
-Go back to discord developer portal. navigate to the "Bot" page. scroll down a bit. find the "Reset Token" button and click on it. it will show a pop up to make sure its not a mis click. click "Yes, do it!". once your token reset click "Copy" to copy the token. navigate back to the [example.env file](https://github.com/drowningdev/NeuroGuard/blob/master/example.env) and find the "token" variable. fill it with your token that you just copied.
+Go back to the **OAuth2** tab in the Developer Portal.  
+Click **"Reset Secret"**, confirm the action, and then click **"Copy"** to copy your new **Client Secret**.  
+Return to the `example.env` file and paste it into the `clientSecret` field, again wrapping it in quotes:
+```env
+clientSecret="your_client_secret_here"
+```
 
+Now go to the **Bot** tab in the Developer Portal.  
+Scroll down and click **"Reset Token"**, confirm the action, and then click **"Copy"** to copy your new **Bot Token**.  
+Paste it into the `token` field in the `example.env` file:
+```env
+token="your_bot_token_here"
+```
+
+Your `example.env` file should now contain the correct credentials, each wrapped in quotes to ensure proper formatting.
