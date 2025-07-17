@@ -177,4 +177,5 @@ Distributed under the [MIT](https://opensource.org/license/mit) License.
 ## Contact
 
 - GitHub: [catroot0](https://github.com/catroot0/)
+- Telegram: [@catroot01](https://t.me/catroot01)
 - Discord: [@catroot0](https://discord.com/users/1358758349054808226)
