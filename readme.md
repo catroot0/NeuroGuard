@@ -176,6 +176,5 @@ Distributed under the [MIT](https://opensource.org/license/mit) License.
 
 ## Contact
 
-- GitHub: [drowningdev](https://github.com/drowningdev/)
-- Email: drowning.dev1@gmail.com
+- GitHub: [drowningdev](https://github.com/catroot0/)
 - Discord: [@catroot0](https://discord.com/users/1358758349054808226)
