@@ -31,7 +31,7 @@
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/drowningdev/NeuroGuard.git
+git clone https://github.com/catroot0/NeuroGuard.git
 cd NeuroGuard
 ```
 
@@ -176,5 +176,5 @@ Distributed under the [MIT](https://opensource.org/license/mit) License.
 
 ## Contact
 
-- GitHub: [drowningdev](https://github.com/catroot0/)
+- GitHub: [catroot0](https://github.com/catroot0/)
 - Discord: [@catroot0](https://discord.com/users/1358758349054808226)
