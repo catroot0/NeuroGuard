@@ -5,18 +5,18 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/drowningdev/AntiGooner.git"
+    "url": "git+https://github.com/catroot0/NeuroGuard.git"
   },
   "author": "DrowningDev",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/drowningdev/AntiGooner/issues"
+    "url": "https://github.com/catroot0/NeuroGuard/issues"
   },
   "scripts": {
     "build": "npx tsc",
     "dev": "node ./src/dist/server/server.js"
   },
-  "homepage": "https://github.com/drowningdev/NeuroGuard#readme",
+  "homepage": "https://github.com/catroot0/NeuroGuard#readme",
   "description": "NeuroGuard is a powerful moderation bot built to help server owners protect their communities from harmful and explicit people. It automatically scans for users affiliated with NSFW or pornographic servers and takes action—such as flagging or banning—according to customizable safety policies. Designed with child safety in mind",
   "dependencies": {
     "axios": "^1.9.0",
