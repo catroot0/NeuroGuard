@@ -126,9 +126,9 @@ clientId="your_application_id_here"
 clientSecret="your_client_secret_here"  
 token="your_bot_token_here"  
 firebaseDatabaseURL="your_firebase_database_url_here"  
-redirectUrl = "https://yourdomain.com/callback"
-port = "your_vps_port"
-host = "your_vps_ip"
+redirectUrl="https://yourdomain.com/callback"
+port="your_vps_port"
+host="your_vps_ip"
 ```
 
 Once its done rename `the example.env` file to `.env`.
